@@ -2,8 +2,10 @@
  * AIComponent - AI 行為元件
  */
 
-import { Vec3 } from 'cc';
+import { find, Vec3 } from 'cc';
 import { Component } from '../../core/Component';
+import { Player } from '../entity/Player';
+import { CombatComponent } from './CombatComponent';
 import { MovementComponent } from './MovementComponent';
 
 export type AIBehavior = 'idle' | 'patrol' | 'chase' | 'fly';
@@ -19,11 +21,18 @@ export class AIComponent extends Component {
     private _patrolTimer: number = 0;
     private _isWaiting: boolean = false;
     private _movement: MovementComponent | null = null;
+    private _combat: CombatComponent | null = null;
+    private _player: Player | null = null;
 
     public onAdd(): void {
         this._movement = this.getComponent(MovementComponent);
+        this._combat = this.getComponent(CombatComponent);
         if (this.entity) {
             this._patrolOrigin = this.entity.node.position.clone();
+        }
+        const playerNode = find('player');
+        if (playerNode) {
+            this._player = playerNode.getComponent(Player);
         }
     }
 
@@ -49,7 +58,15 @@ export class AIComponent extends Component {
     }
 
     private updatePatrol(dt: number): void {
-        // TODO: 實作巡邏行為
+        // Check for player first
+        const playerPos = this.getPlayerPosition();
+        if (playerPos && this.entity) {
+            const distSqr = this.entity.node.position.clone().subtract(playerPos).lengthSqr();
+            if (distSqr < this.detectRange * this.detectRange) {
+                this.behavior = 'chase';
+                return;
+            }
+        }
         if (this._isWaiting) {
             this._patrolTimer -= dt;
             if (this._patrolTimer <= 0) {
@@ -64,39 +81,44 @@ export class AIComponent extends Component {
             return;
         }
 
-        // 檢查是否到達目標
+        // Check if we reached the target
         if (this.entity &&
-            this.entity.node.position.clone().subtract(this._target).lengthSqr() < 100) {
+            this.entity.node.position.clone().subtract(this._target).lengthSqr() < 100) { // 10*10
             this._isWaiting = true;
             this._patrolTimer = this.patrolWaitTime;
             this._movement?.stop();
+            this._target = null;
             return;
         }
 
-        // 移動到目標
+        // Move to target
         this.moveToTarget();
     }
 
     private updateChase(dt: number): void {
-        // TODO: 實作追擊行為
-        // 需要取得玩家位置
         const playerPos = this.getPlayerPosition();
-        if (!playerPos || !this.entity) {
-            this.updatePatrol(dt);
+        if (!playerPos || !this.entity || !this._combat) {
+            this.behavior = 'patrol';
+            this.clearTarget();
             return;
         }
 
-        const dist = this.entity.node.position.clone().subtract(playerPos).length();
+        const distSqr = this.entity.node.position.clone().subtract(playerPos).lengthSqr();
 
-        if (dist > this.detectRange) {
-            // 超出偵測範圍，回到巡邏
-            this.updatePatrol(dt);
+        if (distSqr > this.detectRange * this.detectRange) {
+            this.behavior = 'patrol';
+            this.clearTarget();
             return;
         }
 
-        // 追擊玩家
-        this._target = playerPos;
-        this.moveToTarget();
+        const attackRangeSqr = this._combat.attackRange * this._combat.attackRange;
+        if (distSqr <= attackRangeSqr) {
+            this._movement?.stop();
+            this._combat.attack();
+        } else {
+            this._target = playerPos;
+            this.moveToTarget();
+        }
     }
 
     private updateFly(dt: number): void {
@@ -123,7 +145,17 @@ export class AIComponent extends Component {
     }
 
     private getPlayerPosition(): Vec3 | null {
-        // TODO: 取得玩家位置
+        if (this._player && this._player.isValid) {
+            return this._player.node.position;
+        }
+
+        const playerNode = find('player');
+        if (playerNode) {
+            this._player = playerNode.getComponent(Player);
+            if (this._player) {
+                return this._player.node.position;
+            }
+        }
         return null;
     }
 

@@ -124,37 +124,37 @@
 - **目標**: 敵人基類
 - **檔案**: `assets/scripts/gameplay/entity/Enemy.ts`
 - **驗收標準**:
-  - [ ] 繼承 Entity
-  - [ ] 從 enemies.json 讀取屬性
-  - [ ] 包含 Health/Combat/AI 元件
+  - [x] 繼承 Entity
+  - [x] 從 enemies.json 讀取屬性
+  - [x] 包含 Health/Combat/AI 元件
 - **測試**: 生成 Slime
 
 ### 3.2 AI Component
 - **目標**: 敵人 AI 行為
 - **檔案**: `assets/scripts/gameplay/components/AIComponent.ts`
 - **驗收標準**:
-  - [ ] Idle 待機
-  - [ ] Patrol 巡邏
-  - [ ] Chase 追擊
-  - [ ] 可配置偵測範圍
+  - [x] Idle 待機
+  - [x] Patrol 巡邏
+  - [x] Chase 追擊
+  - [x] 可配置偵測範圍
 - **測試**: 接近敵人會追擊
 
 ### 3.3 Combat Integration
 - **目標**: 戰鬥系統整合
 - **檔案**: `assets/scripts/gameplay/CombatSystem.ts`
 - **驗收標準**:
-  - [ ] 玩家攻擊敵人造成傷害
-  - [ ] 敵人碰撞玩家造成傷害
-  - [ ] 擊退效果
+  - [x] 玩家攻擊敵人造成傷害
+  - [x] 敵人碰撞玩家造成傷害
+  - [x] 擊退效果 (Logic)
 - **測試**: 互相可造成傷害
 
 ### 3.4 Enemy Drops
 - **目標**: 敵人掉落
 - **檔案**: `assets/scripts/gameplay/entity/ItemDrop.ts`
 - **驗收標準**:
-  - [ ] 死亡時依機率掉落
-  - [ ] 掉落物可拾取
-  - [ ] 物件池管理
+  - [x] 死亡時依機率掉落
+  - [x] 掉落物可拾取
+  - [x] 物件池管理
 - **測試**: 殺敵有愛心掉落
 
 ---
