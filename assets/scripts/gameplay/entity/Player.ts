@@ -49,6 +49,15 @@ export class Player extends Entity {
     protected update(dt: number): void {
         super.update(dt);
         this.handleInput();
+        this.updateAnimation();
+    }
+
+    private updateAnimation(): void {
+        if (!this._movement) return;
+
+        // TODO: Implement actual animation state changes
+        const animState = this._movement.isMoving ? 'Run' : 'Idle';
+        // console.log(`Player animation state: ${animState}`);
     }
 
     private handleInput(): void {
@@ -56,18 +65,18 @@ export class Player extends Entity {
         if (!input) return;
 
         // 移動
-        const dir = input.getMovementDirection();
+        const dir = input.getDirection();
         if (this._movement) {
             this._movement.move(new Vec3(dir.x, dir.y, 0));
         }
 
         // 攻擊
-        if (input.isAttackPressed()) {
+        if (input.isButtonPressed('attack')) {
             this.attack();
         }
 
         // 使用道具
-        if (input.isItemUsePressed()) {
+        if (input.isButtonPressed('useItem')) {
             this.useEquippedItem();
         }
     }

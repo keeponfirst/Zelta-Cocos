@@ -52,6 +52,7 @@ export class CombatComponent extends Component {
         this._cooldownTimer = this.attackCooldown;
 
         // TODO: 產生攻擊碰撞區域
+        console.log('Spawning hitbox');
         // TODO: 播放攻擊動畫
 
         return true;

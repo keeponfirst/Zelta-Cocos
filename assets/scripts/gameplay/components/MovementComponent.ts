@@ -2,7 +2,7 @@
  * MovementComponent - 移動元件
  */
 
-import { Vec3 } from 'cc';
+import { Vec3, BoxCollider2D } from 'cc';
 import { Component } from '../../core/Component';
 
 export class MovementComponent extends Component {
@@ -12,25 +12,51 @@ export class MovementComponent extends Component {
 
     private _direction: Vec3 = new Vec3();
 
+    public get isMoving(): boolean {
+        return this._direction.lengthSqr() > 0.01 || this.velocity.lengthSqr() > 0.01;
+    }
+
+    public get isMoving(): boolean {
+        return this._direction.lengthSqr() > 0.01 || this.velocity.lengthSqr() > 0.01;
+    }
+
     public update(dt: number): void {
         if (!this.entity) return;
 
-        // 套用移動
+        const totalMove = new Vec3();
+
+        // Apply movement from direction
         if (this._direction.lengthSqr() > 0) {
             const move = this._direction.clone()
                 .normalize()
                 .multiplyScalar(this.speed * dt);
-
-            this.entity.node.position = this.entity.node.position.add(move);
+            totalMove.add(move);
         }
 
-        // 套用慣性/摩擦
+        // Apply friction and movement from velocity
         this.velocity.multiplyScalar(this.friction);
         if (this.velocity.lengthSqr() > 0.01) {
-            this.entity.node.position = this.entity.node.position.add(
-                this.velocity.clone().multiplyScalar(dt)
-            );
+            totalMove.add(this.velocity.clone().multiplyScalar(dt));
         }
+
+        if (totalMove.lengthSqr() > 0) {
+            const newPos = this.entity.node.position.clone().add(totalMove);
+
+            // Basic AABB collision detection placeholder
+            if (this.checkCollision(newPos)) {
+                this.entity.node.position = newPos;
+            }
+        }
+    }
+
+    private checkCollision(newPos: Vec3): boolean {
+        // TODO: Implement actual AABB collision check.
+        // This is a placeholder and always allows movement.
+        const collider = this.entity.getComponent(BoxCollider2D);
+        if (collider) {
+            // console.log(`Checking collision for ${this.entity.node.name} at ${newPos.toString()}`);
+        }
+        return true;
     }
 
     /**
