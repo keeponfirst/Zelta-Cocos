@@ -45,7 +45,9 @@ export interface RoomData {
     name: string;
     size: { width: number; height: number };
     tilemap: string;
-    connections?: Record<string, { roomId: string; doorType: string }>;
+    connections?: Record<string, { roomId: string; doorId: string }>;
+    doors?: Array<{ doorId: string; doorType: string }>;
+    chests?: Array<{ chestId: string; itemId: string; itemCount: number; x: number; y: number; requiresTrigger?: boolean }>;
     spawns?: {
         enemies?: Array<{ enemyId: string; x: number; y: number; group?: string }>;
         items?: Array<{ itemId: string; x: number; y: number }>;

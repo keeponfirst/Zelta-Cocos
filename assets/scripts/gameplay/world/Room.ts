@@ -8,6 +8,9 @@ import { _decorator, Component, Node, Prefab, instantiate, Vec3, resources } fro
 import { EventBus, GameEvents } from '../../core/EventBus';
 import { RoomData } from '../../core/DataManager';
 import { Enemy } from '../entity/Enemy';
+import { Door } from './Door';
+import { Chest } from './Chest';
+import { TriggerBase } from './triggers/TriggerBase';
 
 const { ccclass, property } = _decorator;
 
@@ -30,9 +33,15 @@ export class Room extends Component {
     @property(Node)
     private doorContainer: Node | null = null;
 
+    @property(Node)
+    private itemContainer: Node | null = null;
+
     private _data: RoomData | null = null;
     private _state: RoomState = RoomState.INACTIVE;
     private _enemies: Map<string, Enemy> = new Map();
+    private _doors: Map<string, Door> = new Map();
+    private _chests: Map<string, Chest> = new Map();
+    private _triggers: Map<string, TriggerBase> = new Map();
     private _enemyGroups: Map<string, string[]> = new Map();
 
     public get state(): RoomState {
@@ -43,6 +52,18 @@ export class Room extends Component {
         return this._data;
     }
 
+    public getDoor(doorId: string): Door | undefined {
+        return this._doors.get(doorId);
+    }
+
+    public getChest(chestId: string): Chest | undefined {
+        return this._chests.get(chestId);
+    }
+
+    public getTrigger(triggerId: string): TriggerBase | undefined {
+        return this._triggers.get(triggerId);
+    }
+
     /**
      * 初始化房間
      */
@@ -50,8 +71,9 @@ export class Room extends Component {
         this._data = data;
         this._state = RoomState.LOADING;
 
-        this.setupTriggers();
-        this.setupDoors();
+        await this.setupDoors();
+        await this.setupChests();
+        await this.setupTriggers();
         await this.spawnEnemies();
 
         this._state = this._enemies.size > 0 ? RoomState.COMBAT : RoomState.ACTIVE;
@@ -62,21 +84,65 @@ export class Room extends Component {
         }
     }
 
-    private setupTriggers(): void {
-        if (!this._data?.triggers) return;
+    private async setupDoors(): Promise<void> {
+        if (!this._data?.doors || !this.doorContainer) return;
 
-        for (const trigger of this._data.triggers) {
-            // TODO: 實例化觸發器
-            console.log(`Setup trigger: ${trigger.triggerId}`);
+        for (const doorData of this._data.doors) {
+            const prefab = await this.loadPrefab(`prefabs/world/door`);
+            if (!prefab) continue;
+
+            const doorNode = instantiate(prefab);
+            doorNode.parent = this.doorContainer;
+
+            const door = doorNode.getComponent(Door);
+            if (door) {
+                const connection = Object.values(this._data.connections || {}).find(c => c.doorId === doorData.doorId);
+                const fullDoorData = {
+                    ...doorData,
+                    targetRoomId: connection?.roomId,
+                };
+                door.init(fullDoorData);
+                this._doors.set(door.doorId, door);
+            }
         }
     }
 
-    private setupDoors(): void {
-        if (!this._data?.connections) return;
+    private async setupChests(): Promise<void> {
+        if (!this._data?.chests || !this.triggerContainer) return;
 
-        for (const [direction, connection] of Object.entries(this._data.connections)) {
-            // TODO: 實例化門
-            console.log(`Setup door: ${direction} -> ${connection.roomId}`);
+        for (const chestData of this._data.chests) {
+            const prefab = await this.loadPrefab(`prefabs/world/chest`);
+            if (!prefab) continue;
+
+            const chestNode = instantiate(prefab);
+            // @ts-ignore
+            chestNode.parent = this.itemContainer;
+
+            const chest = chestNode.getComponent(Chest);
+            if (chest) {
+                // @ts-ignore
+                chest.init(chestData);
+                this._chests.set(chest.chestId, chest);
+            }
+        }
+    }
+
+    private async setupTriggers(): Promise<void> {
+        if (!this._data?.triggers || !this.triggerContainer) return;
+
+        for (const triggerData of this._data.triggers) {
+            const prefab = await this.loadPrefab(`prefabs/triggers/${triggerData.triggerId}`);
+            if (!prefab) continue;
+
+            const triggerNode = instantiate(prefab);
+            triggerNode.parent = this.triggerContainer;
+
+            const trigger = triggerNode.getComponent(TriggerBase);
+            if (trigger) {
+                // @ts-ignore
+                trigger.init(triggerData);
+                this._triggers.set(trigger.triggerId, trigger);
+            }
         }
     }
 
@@ -84,7 +150,7 @@ export class Room extends Component {
         if (!this._data?.spawns?.enemies || !this.enemyContainer) return;
 
         for (const spawn of this._data.spawns.enemies) {
-            const prefab = await this.loadEnemyPrefab(spawn.enemyId);
+            const prefab = await this.loadPrefab(`prefabs/enemies/${spawn.enemyId}`);
             if (!prefab) continue;
 
             const enemyNode = instantiate(prefab);
@@ -108,11 +174,11 @@ export class Room extends Component {
         EventBus.getInstance().on(GameEvents.ENEMY_DEATH, this.onEnemyDeath.bind(this));
     }
 
-    private loadEnemyPrefab(enemyId: string): Promise<Prefab | null> {
+    private loadPrefab(path: string): Promise<Prefab | null> {
         return new Promise((resolve) => {
-            resources.load(`prefabs/enemies/${enemyId}`, Prefab, (err, prefab) => {
+            resources.load(path, Prefab, (err, prefab) => {
                 if (err) {
-                    console.error(`Failed to load enemy prefab: ${enemyId}`, err);
+                    console.error(`Failed to load prefab: ${path}`, err);
                     resolve(null);
                 } else {
                     resolve(prefab);

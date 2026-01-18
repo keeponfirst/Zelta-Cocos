@@ -6,6 +6,7 @@ import { _decorator, Component, Node, Collider2D, Contact2DType } from 'cc';
 import { EventBus, GameEvents } from '../../core/EventBus';
 import { Player } from '../entity/Player';
 import { InventoryComponent } from '../components/InventoryComponent';
+import { ChestData } from './world-types';
 
 const { ccclass, property } = _decorator;
 
@@ -32,6 +33,13 @@ export class Chest extends Component {
     @property(Node)
     private closedSprite: Node | null = null;
 
+    public init(data: ChestData): void {
+        this.chestId = data.chestId;
+        this.itemId = data.itemId;
+        this.itemCount = data.itemCount;
+        this.requiresTrigger = data.requiresTrigger || false;
+    }
+
     protected start(): void {
         this.setupCollision();
         this.updateVisual();
@@ -50,8 +58,13 @@ export class Chest extends Component {
 
         const player = other.node.getComponent(Player);
         if (player) {
-            this.open(player);
+            this.interact(player);
         }
+    }
+
+    public interact(player: Player): void {
+        if (this.isOpen) return;
+        this.open(player);
     }
 
     /**

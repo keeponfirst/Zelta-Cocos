@@ -9,6 +9,7 @@ import { EventBus, GameEvents } from '../../core/EventBus';
 import { RoomManager } from './RoomManager';
 import { Player } from '../entity/Player';
 import { InventoryComponent } from '../components/InventoryComponent';
+import { DoorData } from './world-types';
 
 const { ccclass, property } = _decorator;
 
@@ -38,6 +39,13 @@ export class Door extends Component {
     @property(Node)
     private closedSprite: Node | null = null;
 
+    public init(data: DoorData): void {
+        this.doorId = data.doorId;
+        this.doorType = data.doorType;
+        this.targetRoomId = data.targetRoomId || '';
+        this.direction = data.direction;
+    }
+
     protected start(): void {
         this.setupCollision();
         this.setupEvents();
@@ -64,16 +72,14 @@ export class Door extends Component {
         const player = other.node.getComponent(Player);
         if (!player) return;
 
-        this.tryEnter(player);
+        this.interact(player);
     }
 
-    /**
-     * 嘗試進入門
-     */
-    public tryEnter(player: Player): boolean {
-        if (!this.canEnter(player)) return false;
+    public interact(player: Player): void {
+        if (!this.canEnter(player)) {
+            return;
+        }
 
-        // 消耗鑰匙
         if (this.doorType === 'locked') {
             const inventory = player.getGameComponent(InventoryComponent);
             if (inventory) {
@@ -82,9 +88,11 @@ export class Door extends Component {
             this.unlock();
         }
 
-        // 切換房間
-        RoomManager.getInstance()?.loadRoom(this.targetRoomId);
-        return true;
+        this.onEnter();
+    }
+
+    public onEnter(): void {
+        RoomManager.getInstance()?.transition(this.doorId);
     }
 
     /**

@@ -128,6 +128,23 @@ export class RoomManager extends Component {
     }
 
     /**
+     * 房間轉換
+     */
+    public transition(doorId: string): void {
+        if (!this._currentRoom) return;
+
+        const door = this._currentRoom.getDoor(doorId);
+        if (!door) {
+            console.error(`Door not found: ${doorId}`);
+            return;
+        }
+
+        const targetRoomId = door.targetRoomId;
+        // TODO: Get spawn position from door
+        this.loadRoom(targetRoomId);
+    }
+
+    /**
      * 從存檔還原
      */
     public loadFromSave(roomsCleared: string[]): void {
