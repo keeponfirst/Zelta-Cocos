@@ -1,0 +1,19 @@
+{
+    "name": "kof-scene-validator",
+    "version": "1.0.0",
+    "main": "./main.js",
+    "contributions": {
+        "menu": [
+            {
+                "path": "KOF/Validate Scenes",
+                "label": "Validate Scenes",
+                "message": "validate-scenes"
+            }
+        ],
+        "messages": {
+            "validate-scenes": {
+                "methods": ["validateScenes"]
+            }
+        }
+    }
+}

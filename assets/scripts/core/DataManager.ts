@@ -75,19 +75,32 @@ export class DataManager {
     }
 
     /**
+     * 初始化 DataManager
+     */
+    public async init(): Promise<void> {
+        if (this._loaded) return;
+        console.log('DataManager: Initializing...');
+        await this.loadAll();
+        console.log('DataManager: Initialized.');
+    }
+
+    /**
      * 載入所有資料表
      */
     public async loadAll(): Promise<void> {
-        // TODO: 實作資料載入
         if (this._loaded) return;
 
-        await Promise.all([
-            this.loadTable('data/tables/items', this._items, 'items'),
-            this.loadTable('data/tables/enemies', this._enemies, 'enemies'),
-            this.loadTable('data/tables/rooms', this._rooms, 'rooms'),
-        ]);
-
-        this._loaded = true;
+        try {
+            await Promise.all([
+                this.loadTable('data/tables/items', this._items, 'items'),
+                this.loadTable('data/tables/enemies', this._enemies, 'enemies'),
+                this.loadTable('data/tables/rooms', this._rooms, 'rooms'),
+                // Add triggers and quests if needed, for now we skip to avoid type errors if file structure differs
+            ]);
+            this._loaded = true;
+        } catch (e) {
+            console.error('DataManager: Failed to load data tables.', e);
+        }
     }
 
     private loadTable<T extends { id: string }>(
@@ -98,8 +111,14 @@ export class DataManager {
         return new Promise((resolve, reject) => {
             resources.load(path, JsonAsset, (err, asset) => {
                 if (err) {
+                    // Try without subpath if it fails, just in case
                     console.error(`Failed to load ${path}:`, err);
                     reject(err);
+                    return;
+                }
+                if (!asset || !asset.json) {
+                    console.error(`Asset ${path} is invalid.`);
+                    reject(new Error(`Asset ${path} is invalid.`));
                     return;
                 }
                 const data = asset.json as Record<string, T[]>;

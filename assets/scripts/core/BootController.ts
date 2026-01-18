@@ -1,6 +1,9 @@
-
-import { _decorator, Component, director, resources, JsonAsset } from 'cc';
+import { _decorator, Component, director, Node } from 'cc';
 import { DataManager } from './DataManager';
+import { SceneRouter } from './SceneRouter';
+import { AudioSystem } from '../systems/AudioSystem';
+import { SaveSystem } from '../systems/SaveSystem';
+import { InputSystem } from '../systems/InputSystem';
 
 const { ccclass, property } = _decorator;
 
@@ -14,31 +17,58 @@ export class BootController extends Component {
     private async initializeGame() {
         console.log('Booting game...');
 
-        // Initialize DataManager
+        // 1. Initialize DataManager
         try {
-            console.log('Loading data...');
-            // In a real scenario, we would wait for loadAll.
-            // Since DataManager.loadAll is async but might need resources that are not yet loaded if we didn't preload,
-            // we will just call it.
-            await DataManager.getInstance().loadAll();
+            await DataManager.getInstance().init();
             console.log('Data loaded.');
         } catch (e) {
             console.error('Failed to load data:', e);
         }
 
-        // Preload essential resources (placeholder)
-        await this.preloadResources();
+        // 2. Create Persistent Systems
+        this.createPersistentSystems();
 
-        // Transition to menu
+        // 3. Transition to menu
         console.log('Transitioning to menu...');
-        director.loadScene('menu');
+        SceneRouter.loadMenu();
     }
 
-    private preloadResources(): Promise<void> {
-        return new Promise((resolve) => {
-            // Placeholder for preloading logic
-            // e.g. resources.loadDir('prefabs', ...);
-            setTimeout(resolve, 100);
-        });
+    private createPersistentSystems() {
+        // Check if systems root already exists (e.g. if we returned to boot scene)
+        let systemsRoot = director.getScene()?.getChildByName('KOF_SystemsRoot');
+        if (systemsRoot) {
+             console.log('Systems root already exists.');
+             return;
+        }
+
+        // Check if it exists in persistent nodes (director.getScene() might not show persistent nodes directly depending on lifecycle)
+        // director.addPersistRootNode adds it to the game's root, which is technically a sibling of the scene,
+        // but accessible via director.
+        // However, standard practice is to create it, add it, and checking if it exists is tricky if we don't keep a reference.
+        // But since boot.scene is the entry point, we assume we do this once.
+        // If we reload boot.scene, we should check.
+        // The persistent root node stays in the scene graph but is not destroyed.
+
+        // Actually, `director.addPersistRootNode` makes the node a child of `Director.root`.
+        // It persists across scenes.
+
+        // A common pattern is to have a Singleton to track initialization, or check if the node exists.
+        // But since we can't easily query persistent nodes by name via `director` API directly without traversing,
+        // we can rely on `AudioSystem.getInstance()` to check if systems are already up.
+
+        if (AudioSystem.getInstance()) {
+             console.log('Systems already initialized.');
+             return;
+        }
+
+        systemsRoot = new Node('KOF_SystemsRoot');
+
+        // Add Systems
+        systemsRoot.addComponent(AudioSystem);
+        systemsRoot.addComponent(SaveSystem);
+        systemsRoot.addComponent(InputSystem);
+
+        director.addPersistRootNode(systemsRoot);
+        console.log('Persistent Systems Initialized.');
     }
 }
