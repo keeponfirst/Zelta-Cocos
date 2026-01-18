@@ -16,10 +16,6 @@ export class MovementComponent extends Component {
         return this._direction.lengthSqr() > 0.01 || this.velocity.lengthSqr() > 0.01;
     }
 
-    public get isMoving(): boolean {
-        return this._direction.lengthSqr() > 0.01 || this.velocity.lengthSqr() > 0.01;
-    }
-
     public update(dt: number): void {
         if (!this.entity) return;
 

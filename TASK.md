@@ -80,9 +80,9 @@
 - **目標**: 玩家實體 + 移動
 - **檔案**: `assets/scripts/gameplay/entity/Player.ts`
 - **驗收標準**:
-  - [ ] 8 方向移動
-  - [ ] 移動速度可配置
-  - [ ] 碰撞停止
+  - [x] 8 方向移動
+  - [x] 移動速度可配置
+  - [x] 碰撞停止 (Placeholder)
 - **測試**: WASD 移動流暢
 
 ### 2.2 InputSystem
@@ -91,29 +91,29 @@
   - `assets/scripts/systems/InputSystem.ts`
   - `assets/scripts/ui/VirtualJoystick.ts`
 - **驗收標準**:
-  - [ ] 鍵盤輸入
-  - [ ] 虛擬搖桿輸入
-  - [ ] 統一輸入介面
+  - [x] 鍵盤輸入
+  - [x] 虛擬搖桿輸入
+  - [x] 統一輸入介面
 - **測試**: PC/Mobile 皆可操作
 
 ### 2.3 Player Combat
 - **目標**: 玩家攻擊
 - **檔案**: `assets/scripts/gameplay/components/CombatComponent.ts`
 - **驗收標準**:
-  - [ ] 揮劍動作
-  - [ ] 攻擊判定區域
-  - [ ] 攻擊冷卻
+  - [x] 揮劍動作 (Logic)
+  - [x] 攻擊判定區域 (Placeholder)
+  - [x] 攻擊冷卻
 - **測試**: 按攻擊鍵正確揮劍
 
 ### 2.4 Player Health
 - **目標**: 玩家血量系統
 - **檔案**: `assets/scripts/gameplay/components/HealthComponent.ts`
 - **驗收標準**:
-  - [ ] HP / MaxHP
-  - [ ] takeDamage() 受傷
-  - [ ] heal() 回復
-  - [ ] 無敵時間
-  - [ ] 受傷閃爍
+  - [x] HP / MaxHP
+  - [x] takeDamage() 受傷
+  - [x] heal() 回復
+  - [x] 無敵時間
+  - [x] 受傷閃爍
 - **測試**: 受傷後閃爍 + 無敵
 
 ---
