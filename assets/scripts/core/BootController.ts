@@ -1,3 +1,4 @@
+console.log('[Sanity] BootController Module Loaded');
 import { _decorator, Component, director, Node } from 'cc';
 import { DataManager } from './DataManager';
 import { SceneRouter } from './SceneRouter';
@@ -11,7 +12,17 @@ const { ccclass, property } = _decorator;
 @ccclass('BootController')
 export class BootController extends Component {
 
+    constructor() {
+        super();
+        console.log('[Lifecycle] BootController Constructor');
+    }
+
+    onLoad() {
+        console.log('[Lifecycle] BootController onLoad');
+    }
+
     start() {
+        console.log('[Lifecycle] BootController start');
         this.initializeGame();
     }
 
