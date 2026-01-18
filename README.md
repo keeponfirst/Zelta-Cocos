@@ -42,6 +42,10 @@ The game uses an **Entity-Component** pattern with a global **EventBus**:
 - **Systems**: `InputSystem`, `SaveSystem`, `AudioSystem`
 - **Data**: Data definitions in JSON, loaded via `DataManager`
 
+## 📝 Dev Logs
+- [2026-01-18: Code-First vs Scene-First (English)](records/2026-01-18_cocos_thoughts_en.md)
+- [2026-01-18: Cocos Creator KOF 工作流心得 (中文)](records/2026-01-18_cocos_thoughts_zh.md)
+
 ## 🛠️ Getting Started
 
 1. Clone the repository:
