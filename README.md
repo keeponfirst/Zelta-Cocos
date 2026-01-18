@@ -20,8 +20,8 @@ This repository serves as a live example and reference implementation for the **
 | **2** | **Player System** | ✅ Done | **Input**: Keyboard/Virtual Joystick<br>**Movement**: 8-way + collision<br>**Combat**: Attack logic & HP system |
 | **3** | **Enemy System** | ✅ Done | Slime, Skeleton, Bat AI & behaviors |
 | **4** | **World System** | ✅ Done | Room management, doors, triggers |
-| **5** | **Item System** | 🚧 In Progress | Inventory, bombs, boomerang (Assets Ready, Code in Dev) |
-| **6** | **Save System** | ⏳ Pending | Save/Load & migration |
+| **5** | **Item System** | ✅ Done | Inventory, bombs, boomerang |
+| **6** | **Save System** | 🚧 In Progress | Save/Load & migration |
 | **7** | **Polish** | ⏳ Pending | HUD, Audio, QA |
 
 ## 📂 KOF Workflow Structure
