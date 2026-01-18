@@ -28,6 +28,16 @@ export class AudioSystem extends Component {
 
     protected onLoad(): void {
         AudioSystem._instance = this;
+        this.ensureAudioSources();
+    }
+
+    private ensureAudioSources() {
+        if (!this.bgmSource) {
+            this.bgmSource = this.node.addComponent(AudioSource);
+        }
+        if (!this.sfxSource) {
+            this.sfxSource = this.node.addComponent(AudioSource);
+        }
     }
 
     protected onDestroy(): void {

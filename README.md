@@ -53,7 +53,8 @@ The game uses an **Entity-Component** pattern with a global **EventBus**:
    git clone https://github.com/keeponfirst/Zelta-Cocos.git
    ```
 2. Open the project folder with **Cocos Creator 3.x**.
-3. Open `assets/scenes/boot.scene` (once created) to start.
+3. **Important:** Run the editor tool via menu `KOF > Validate Scenes` to ensure scene structure is correct.
+4. Open `assets/scenes/boot.scene` to start. This is the configured Start Scene.
 
 ---
 *Built with ❤️ using the KeepOnFirst Workflow*
