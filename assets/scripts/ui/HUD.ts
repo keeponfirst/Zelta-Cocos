@@ -5,7 +5,7 @@
  */
 
 import { _decorator, Component, Node, Label, Sprite, Prefab, instantiate } from 'cc';
-import { EventBus, GameEvents } from '../../core/EventBus';
+import { EventBus, GameEvents } from '../core/EventBus';
 import { HealthComponent } from '../gameplay/components/HealthComponent';
 import { InventoryComponent } from '../gameplay/components/InventoryComponent';
 
@@ -21,7 +21,7 @@ export class HUD extends Component {
 
     @property(Sprite)
     public itemIcon: Sprite | null = null;
-    
+
     @property(Prefab)
     public heartFullPrefab: Prefab | null = null;
 
@@ -46,7 +46,7 @@ export class HUD extends Component {
         // INVENTORY_CHANGE is not a real event, so we will listen for ITEM_PICKUP
         bus.on(GameEvents.ITEM_PICKUP, this.onInventoryChange, this);
     }
-    
+
     private teardownEvents(): void {
         const bus = EventBus.getInstance();
         bus.off(GameEvents.PLAYER_HURT, this.onPlayerHpChange, this);
@@ -63,7 +63,7 @@ export class HUD extends Component {
             this.updateRupees(data.rupees);
         }
     }
-    
+
     public updateHearts(current: number, max: number): void {
         if (!this.heartsContainer || !this.heartFullPrefab || !this.heartHalfPrefab || !this.heartEmptyPrefab) {
             return;
@@ -83,7 +83,7 @@ export class HUD extends Component {
             } else {
                 heartPrefab = this.heartEmptyPrefab;
             }
-            
+
             if (heartPrefab) {
                 const heartNode = instantiate(heartPrefab);
                 this.heartsContainer.addChild(heartNode);
