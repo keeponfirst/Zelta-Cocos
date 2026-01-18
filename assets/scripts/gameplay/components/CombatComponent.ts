@@ -2,8 +2,12 @@
  * CombatComponent - 戰鬥元件
  */
 
+import { find } from 'cc';
 import { Component } from '../../core/Component';
+import { Entity } from '../../core/Entity';
 import { EventBus } from '../../core/EventBus';
+import { Player } from '../entity/Player';
+import { HealthComponent } from './HealthComponent';
 
 export class CombatComponent extends Component {
     public attackPower: number = 1;
@@ -44,15 +48,22 @@ export class CombatComponent extends Component {
     /**
      * 執行攻擊
      */
-    public attack(): boolean {
-        if (!this.canAttack()) return false;
+    public attack(target: Entity): boolean {
+        if (!this.canAttack() || !this.entity) return false;
 
         this._isAttacking = true;
         this._attackTimer = this._attackDuration;
         this._cooldownTimer = this.attackCooldown;
 
-        // TODO: 產生攻擊碰撞區域
-        console.log('Spawning hitbox');
+        // Check distance and deal damage if close enough
+        const selfPos = this.entity.node.position;
+        const targetPos = target.node.position;
+        const distSqr = selfPos.subtract(targetPos).lengthSqr();
+
+        if (distSqr < this.attackRange * this.attackRange) {
+            this.dealDamage(target);
+        }
+
         // TODO: 播放攻擊動畫
 
         return true;
@@ -61,9 +72,11 @@ export class CombatComponent extends Component {
     /**
      * 對目標造成傷害
      */
-    public dealDamage(target: Component): void {
-        // TODO: 取得目標的 HealthComponent 並造成傷害
-        console.log(`Dealing ${this.attackPower} damage`);
+    public dealDamage(target: Entity): void {
+        const health = target.getGameComponent(HealthComponent);
+        if (health) {
+            health.takeDamage(this.attackPower);
+        }
     }
 
     /**

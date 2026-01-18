@@ -4,14 +4,15 @@
  * 敵人的基類，由 enemies.json 定義屬性
  */
 
-import { _decorator } from 'cc';
-import { Entity } from '../../core/Entity';
+import { _decorator, instantiate, Prefab } from 'cc';
 import { DataManager, EnemyData } from '../../core/DataManager';
+import { Entity } from '../../core/Entity';
 import { EventBus, GameEvents } from '../../core/EventBus';
+import { AIComponent } from '../components/AIComponent';
+import { CombatComponent } from '../components/CombatComponent';
 import { HealthComponent } from '../components/HealthComponent';
 import { MovementComponent } from '../components/MovementComponent';
-import { CombatComponent } from '../components/CombatComponent';
-import { AIComponent } from '../components/AIComponent';
+import { ItemDrop } from './ItemDrop';
 
 const { ccclass, property } = _decorator;
 
@@ -22,6 +23,9 @@ export class Enemy extends Entity {
 
     @property
     public groupId: string = '';
+
+    @property(Prefab)
+    public itemDropPrefab: Prefab | null = null;
 
     private _data: EnemyData | null = null;
     private _health: HealthComponent | null = null;
@@ -91,16 +95,18 @@ export class Enemy extends Entity {
      * 掉落道具
      */
     private dropItems(): void {
-        if (!this._data?.drops) return;
+        if (!this._data?.drops || !this.itemDropPrefab) return;
 
         for (const drop of this._data.drops) {
             if (Math.random() < drop.chance) {
-                // TODO: 生成掉落物
-                console.log(`Dropped: ${drop.itemId}`);
-                EventBus.getInstance().emit(GameEvents.ITEM_PICKUP, {
-                    itemId: drop.itemId,
-                    position: this.node.position.clone(),
-                });
+                const itemDropNode = instantiate(this.itemDropPrefab);
+                itemDropNode.position = this.node.position;
+                this.node.parent?.addChild(itemDropNode);
+
+                const itemDrop = itemDropNode.getComponent(ItemDrop);
+                if (itemDrop) {
+                    itemDrop.setDrop(drop.itemId, 1);
+                }
             }
         }
     }

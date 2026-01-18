@@ -78,7 +78,6 @@ export class RoomManager extends Component {
     }
 
     private async createRoom(roomData: RoomData): Promise<void> {
-        // TODO: 實作房間創建
         if (!this.roomPrefab || !this.roomContainer) return;
 
         const roomNode = instantiate(this.roomPrefab);
@@ -86,7 +85,7 @@ export class RoomManager extends Component {
 
         const room = roomNode.getComponent(Room);
         if (room) {
-            room.init(roomData);
+            await room.init(roomData);
             this._currentRoom = room;
 
             // 如果已清除，標記為已清除狀態

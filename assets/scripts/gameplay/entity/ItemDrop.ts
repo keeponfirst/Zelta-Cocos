@@ -4,9 +4,10 @@
  * 敵人死亡掉落的可拾取道具
  */
 
-import { _decorator, Collider2D, Contact2DType } from 'cc';
+import { _decorator, Collider2D, Contact2DType, find } from 'cc';
 import { Entity } from '../../core/Entity';
 import { EventBus, GameEvents } from '../../core/EventBus';
+import { InventoryComponent } from '../components/InventoryComponent';
 import { Player } from './Player';
 
 const { ccclass, property } = _decorator;
@@ -34,7 +35,6 @@ export class ItemDrop extends Entity {
     }
 
     private setupCollision(): void {
-        // TODO: 設定碰撞
         const collider = this.getComponent(Collider2D);
         if (collider) {
             collider.on(Contact2DType.BEGIN_CONTACT, this.onContact, this);
@@ -57,29 +57,28 @@ export class ItemDrop extends Entity {
         }
     }
 
-    private onContact(other: Collider2D): void {
+    private onContact(selfCollider: Collider2D, otherCollider: Collider2D): void {
         if (this._collected) return;
 
-        const player = other.node.getComponent(Player);
+        const player = otherCollider.getComponent(Player);
         if (player && this.autoPickup) {
-            this.collect();
+            this.collect(player);
         }
     }
 
     /**
      * 收集道具
      */
-    public collect(): void {
+    public collect(player: Player): void {
         if (this._collected) return;
-        this._collected = true;
 
-        EventBus.getInstance().emit(GameEvents.ITEM_PICKUP, {
-            itemId: this.itemId,
-            count: this.count,
-        });
+        const inventory = player.getGameComponent(InventoryComponent);
+        if (inventory && inventory.addItem(this.itemId, this.count)) {
+            this._collected = true;
 
-        // TODO: 播放收集動畫/音效
-        this.node.destroy();
+            // TODO: 播放收集動畫/音效
+            this.node.destroy();
+        }
     }
 
     /**
