@@ -21,8 +21,8 @@ This repository serves as a live example and reference implementation for the **
 | **3** | **Enemy System** | ✅ Done | Slime, Skeleton, Bat AI & behaviors |
 | **4** | **World System** | ✅ Done | Room management, doors, triggers |
 | **5** | **Item System** | ✅ Done | Inventory, bombs, boomerang |
-| **6** | **Save System** | 🚧 In Progress | Save/Load & migration |
-| **7** | **Polish** | ⏳ Pending | HUD, Audio, QA |
+| **6** | **Save System** | ✅ Done | Save/Load & migration |
+| **7** | **Polish** | 🚧 In Progress | HUD, Audio, QA |
 
 ## 📂 KOF Workflow Structure
 
