@@ -54,7 +54,7 @@ export class Projectile extends Entity {
 
         // 生命週期結束
         if (this._elapsed > this.lifeTime) {
-            this.destroy();
+            this.destroySelf();
         }
     }
 
@@ -88,11 +88,11 @@ export class Projectile extends Entity {
 
         // 非迴力鏢立即銷毀
         if (this.projectileType !== 'boomerang') {
-            this.destroy();
+            this.destroySelf();
         }
     }
 
-    private destroy(): void {
+    private destroySelf(): void {
         this.node.destroy();
     }
 }

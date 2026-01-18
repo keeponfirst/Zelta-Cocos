@@ -65,9 +65,9 @@ export class InventoryComponent extends Component {
         }
     }
 
-import { ItemSystem } from '../../systems/ItemSystem';
 
-// ... (existing code)
+
+    // ... (existing code)
 
     public useCurrentItem(): void {
         if (this.equippedItemIndex !== -1) {
