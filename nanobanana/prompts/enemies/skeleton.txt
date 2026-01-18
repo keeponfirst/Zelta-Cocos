@@ -1,0 +1,40 @@
+16-bit pixel art skeleton warrior enemy sprite sheet
+
+An undead skeleton soldier for a Zelda-like top-down 2D action RPG.
+
+Style:
+- 16-bit SNES era pixel art
+- Classic fantasy undead aesthetic
+- Limited color palette (8-10 colors)
+- Slightly threatening but fit for all ages
+
+Character Design:
+- Humanoid skeleton frame
+- Bone white with slight yellow/cream tinting
+- Empty eye sockets with faint red glow
+- Holding a simple sword and small shield
+- Tattered cloth remnants (brown/grey)
+- Standing in combat-ready pose
+
+Animation Frames:
+- Idle: 2 frames, slight sway/bone rattle
+- Walk: 4 frames per direction (4 directions)
+- Attack: 3 frames, sword slash motion
+- Hurt: 1 frame, recoil
+
+Size:
+- 32x32 pixel sprite
+- Slightly taller than player character
+
+Background:
+- Transparent
+
+Visual Details:
+- Visible rib cage
+- Articulated joints
+- Skull face with menacing grin
+- Simple shading on bones
+
+Output:
+- Sprite sheet organized by animation
+- Front-facing as primary direction

@@ -1,0 +1,283 @@
+{
+    "rooms": [
+        {
+            "id": "dungeon_01_entrance",
+            "name": "森林神殿 - 入口",
+            "size": {
+                "width": 320,
+                "height": 240
+            },
+            "tilemap": "tilemaps/dungeon_01/entrance",
+            "connections": {
+                "north": {
+                    "roomId": "dungeon_01_room_01",
+                    "doorType": "normal"
+                }
+            },
+            "spawns": {
+                "enemies": [],
+                "items": []
+            },
+            "triggers": []
+        },
+        {
+            "id": "dungeon_01_room_01",
+            "name": "森林神殿 - 戰鬥房",
+            "size": {
+                "width": 320,
+                "height": 240
+            },
+            "tilemap": "tilemaps/dungeon_01/room_01",
+            "connections": {
+                "south": {
+                    "roomId": "dungeon_01_entrance",
+                    "doorType": "normal"
+                },
+                "north": {
+                    "roomId": "dungeon_01_room_02",
+                    "doorType": "combat"
+                }
+            },
+            "spawns": {
+                "enemies": [
+                    {
+                        "enemyId": "slime",
+                        "x": 100,
+                        "y": 100,
+                        "group": "wave_1"
+                    },
+                    {
+                        "enemyId": "slime",
+                        "x": 200,
+                        "y": 100,
+                        "group": "wave_1"
+                    },
+                    {
+                        "enemyId": "skeleton",
+                        "x": 150,
+                        "y": 150,
+                        "group": "wave_1"
+                    }
+                ],
+                "items": []
+            },
+            "triggers": [],
+            "unlockCondition": {
+                "type": "enemy_cleared"
+            }
+        },
+        {
+            "id": "dungeon_01_room_02",
+            "name": "森林神殿 - 鑰匙房",
+            "size": {
+                "width": 320,
+                "height": 240
+            },
+            "tilemap": "tilemaps/dungeon_01/room_02",
+            "connections": {
+                "south": {
+                    "roomId": "dungeon_01_room_01",
+                    "doorType": "normal"
+                },
+                "east": {
+                    "roomId": "dungeon_01_room_03",
+                    "doorType": "locked"
+                }
+            },
+            "spawns": {
+                "enemies": [
+                    {
+                        "enemyId": "bat",
+                        "x": 80,
+                        "y": 80,
+                        "group": "wave_1"
+                    },
+                    {
+                        "enemyId": "bat",
+                        "x": 240,
+                        "y": 80,
+                        "group": "wave_1"
+                    }
+                ],
+                "items": []
+            },
+            "triggers": [
+                {
+                    "triggerId": "chest_key_01",
+                    "type": "chest",
+                    "x": 160,
+                    "y": 60,
+                    "params": {
+                        "itemId": "key",
+                        "count": 1
+                    }
+                }
+            ]
+        },
+        {
+            "id": "dungeon_01_room_03",
+            "name": "森林神殿 - 推箱房",
+            "size": {
+                "width": 320,
+                "height": 240
+            },
+            "tilemap": "tilemaps/dungeon_01/room_03",
+            "connections": {
+                "west": {
+                    "roomId": "dungeon_01_room_02",
+                    "doorType": "normal"
+                },
+                "north": {
+                    "roomId": "dungeon_01_room_04",
+                    "doorType": "combat"
+                }
+            },
+            "spawns": {
+                "enemies": [],
+                "items": []
+            },
+            "triggers": [
+                {
+                    "triggerId": "plate_01",
+                    "type": "pressure_plate",
+                    "x": 200,
+                    "y": 120,
+                    "params": {
+                        "linkedTo": [
+                            "door_north"
+                        ]
+                    }
+                },
+                {
+                    "triggerId": "block_01",
+                    "type": "push_block",
+                    "x": 100,
+                    "y": 120,
+                    "params": {}
+                }
+            ],
+            "unlockCondition": {
+                "type": "switch_all"
+            }
+        },
+        {
+            "id": "dungeon_01_room_04",
+            "name": "森林神殿 - 寶箱房",
+            "size": {
+                "width": 320,
+                "height": 240
+            },
+            "tilemap": "tilemaps/dungeon_01/room_04",
+            "connections": {
+                "south": {
+                    "roomId": "dungeon_01_room_03",
+                    "doorType": "normal"
+                },
+                "east": {
+                    "roomId": "dungeon_01_room_05",
+                    "doorType": "normal"
+                }
+            },
+            "spawns": {
+                "enemies": [],
+                "items": []
+            },
+            "triggers": [
+                {
+                    "triggerId": "chest_boomerang",
+                    "type": "chest",
+                    "x": 160,
+                    "y": 60,
+                    "params": {
+                        "itemId": "boomerang",
+                        "count": 1
+                    }
+                }
+            ]
+        },
+        {
+            "id": "dungeon_01_room_05",
+            "name": "森林神殿 - 開關房",
+            "size": {
+                "width": 320,
+                "height": 240
+            },
+            "tilemap": "tilemaps/dungeon_01/room_05",
+            "connections": {
+                "west": {
+                    "roomId": "dungeon_01_room_04",
+                    "doorType": "normal"
+                },
+                "north": {
+                    "roomId": "dungeon_01_boss",
+                    "doorType": "boss"
+                }
+            },
+            "spawns": {
+                "enemies": [
+                    {
+                        "enemyId": "stalfos",
+                        "x": 160,
+                        "y": 120,
+                        "group": "wave_1"
+                    }
+                ],
+                "items": []
+            },
+            "triggers": [
+                {
+                    "triggerId": "switch_01",
+                    "type": "switch",
+                    "x": 80,
+                    "y": 60,
+                    "params": {
+                        "linkedTo": [
+                            "chest_boss_key"
+                        ]
+                    }
+                },
+                {
+                    "triggerId": "chest_boss_key",
+                    "type": "chest",
+                    "x": 240,
+                    "y": 60,
+                    "params": {
+                        "itemId": "boss_key",
+                        "count": 1,
+                        "locked": true
+                    }
+                }
+            ]
+        },
+        {
+            "id": "dungeon_01_boss",
+            "name": "森林神殿 - Boss 房",
+            "size": {
+                "width": 480,
+                "height": 360
+            },
+            "tilemap": "tilemaps/dungeon_01/boss",
+            "connections": {
+                "south": {
+                    "roomId": "dungeon_01_room_05",
+                    "doorType": "normal"
+                }
+            },
+            "spawns": {
+                "enemies": [
+                    {
+                        "enemyId": "boss_golem",
+                        "x": 240,
+                        "y": 180,
+                        "group": "boss"
+                    }
+                ],
+                "items": []
+            },
+            "triggers": [],
+            "unlockCondition": {
+                "type": "enemy_cleared"
+            }
+        }
+    ]
+}

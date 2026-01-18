@@ -1,0 +1,111 @@
+{
+    "items": [
+        {
+            "id": "sword_wood",
+            "name": "木劍",
+            "description": "勇者的起始武器，雖然老舊但依然可靠。",
+            "type": "equipment",
+            "stackable": false,
+            "effect": {
+                "type": "damage",
+                "value": 1
+            },
+            "sprite": "sprites/items/sword_wood",
+            "rarity": "common"
+        },
+        {
+            "id": "boomerang",
+            "name": "迴力鏢",
+            "description": "可以暈眩敵人並觸發遠端開關的神奇道具。",
+            "type": "equipment",
+            "stackable": false,
+            "effect": {
+                "type": "stun",
+                "value": 2,
+                "duration": 2
+            },
+            "sprite": "sprites/items/boomerang",
+            "rarity": "uncommon"
+        },
+        {
+            "id": "bow",
+            "name": "弓箭",
+            "description": "遠程攻擊武器，需要消耗箭矢。",
+            "type": "equipment",
+            "stackable": false,
+            "effect": {
+                "type": "damage",
+                "value": 2
+            },
+            "sprite": "sprites/items/bow",
+            "rarity": "uncommon"
+        },
+        {
+            "id": "key",
+            "name": "小鑰匙",
+            "description": "用於開啟鎖住的門，一次性消耗。",
+            "type": "key",
+            "stackable": true,
+            "maxStack": 9,
+            "effect": {
+                "type": "unlock",
+                "value": 1
+            },
+            "sprite": "sprites/items/key",
+            "rarity": "common"
+        },
+        {
+            "id": "boss_key",
+            "name": "Boss 鑰匙",
+            "description": "用於開啟 Boss 房的特殊鑰匙。",
+            "type": "key",
+            "stackable": false,
+            "effect": {
+                "type": "unlock",
+                "value": 1
+            },
+            "sprite": "sprites/items/boss_key",
+            "rarity": "rare"
+        },
+        {
+            "id": "bomb",
+            "name": "炸彈",
+            "description": "可以炸開裂縫牆壁，對敵人造成傷害。",
+            "type": "consumable",
+            "stackable": true,
+            "maxStack": 9,
+            "effect": {
+                "type": "explode",
+                "value": 4
+            },
+            "sprite": "sprites/items/bomb",
+            "rarity": "common"
+        },
+        {
+            "id": "heart",
+            "name": "愛心",
+            "description": "回復 2 HP。",
+            "type": "consumable",
+            "stackable": false,
+            "effect": {
+                "type": "heal",
+                "value": 2
+            },
+            "sprite": "sprites/items/heart",
+            "rarity": "common"
+        },
+        {
+            "id": "heart_container",
+            "name": "心之容器",
+            "description": "永久增加最大生命值。",
+            "type": "consumable",
+            "stackable": false,
+            "effect": {
+                "type": "buff",
+                "value": 2
+            },
+            "sprite": "sprites/items/heart_container",
+            "rarity": "rare"
+        }
+    ]
+}

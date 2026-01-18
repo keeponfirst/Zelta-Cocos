@@ -1,0 +1,81 @@
+16-bit pixel art dungeon tileset moodboard
+
+A visual reference board for creating an indoor dungeon tileset for a Zelda-like top-down 2D action RPG.
+
+Mood/Theme:
+- Classic Zelda dungeon aesthetic
+- Dark, mysterious, slightly dangerous
+- Ancient temple/ruin atmosphere
+- Room-based rectangular design
+
+Color Palette:
+- Stone grays (walls, floor, pillars)
+- Dark browns (wood elements, doors)
+- Moss greens (aged, overgrown accents)
+- Torch orange/yellow (lighting accents)
+- Black (pits, shadows, voids)
+- Accent colors per dungeon theme
+
+Required Tiles (16x16 each):
+
+Floor Tiles:
+- Stone floor (base, cracked variants)
+- Decorative floor patterns
+- Pit/void (black, deadly)
+- Spike trap (up and down states)
+- Pressure plate (pressed/released)
+
+Wall Tiles:
+- Solid wall (top/bottom/sides)
+- Wall corners (inner/outer)
+- Bombable wall (cracked variant)
+- Wall torch holder
+
+Doors:
+- Open door passage
+- Closed door (normal)
+- Locked door (keyhole visible)
+- Boss door (ornate, large)
+- Shutter door (combat lock)
+
+Interactive Objects:
+- Treasure chest (open/closed)
+- Switch/lever (on/off)
+- Push block (moveable stone)
+- Pot/vase (breakable)
+- Statue/decoration
+
+Hazards:
+- Spike floor
+- Fire trap
+- Arrow trap hole (wall)
+- Moving platform edge
+
+Decorative:
+- Pillars
+- Skull decor
+- Chains
+- Cobwebs
+- Moss patches
+
+Lighting Considerations:
+- Torches provide warm pools of light
+- Corners are darker
+- Slight vignette feel in rooms
+
+Style Notes:
+- Primarily grayscale with accent colors
+- Room edges clearly defined
+- Grid-friendly design
+- All tiles 16x16 base
+
+Reference Games:
+- A Link to the Past dungeons
+- Link's Awakening dungeons
+- Binding of Isaac room layouts
+
+Output:
+- Moodboard showing dungeon atmosphere
+- Sample room layout example
+- Key interactive tiles highlighted
+- Color palette strip

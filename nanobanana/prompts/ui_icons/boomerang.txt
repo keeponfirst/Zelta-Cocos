@@ -1,0 +1,37 @@
+16-bit pixel art boomerang icon for RPG game UI
+
+A curved throwing boomerang for inventory display in a Zelda-like game.
+
+Style:
+- 16-bit SNES era pixel art
+- Fantasy/wooden boomerang design
+- Limited color palette (4-5 colors)
+- Clear curved silhouette
+
+Design:
+- Classic curved V-shape boomerang
+- Light brown wood color
+- Slight angle for dynamic look
+- Simple carved pattern (optional)
+- Visible wood grain texture
+
+Alternative:
+- Blue magical boomerang variant
+- With subtle glow effect pixels
+
+Size:
+- 16x16 pixels
+- Diagonal orientation to fit
+
+Background:
+- Transparent
+
+Visual Details:
+- Wood grain lines (1-2 pixels)
+- Lighter edge highlight
+- Dark outline
+- Slightly asymmetric arms
+
+Output:
+- Single boomerang icon
+- Angled 45 degrees for visual interest

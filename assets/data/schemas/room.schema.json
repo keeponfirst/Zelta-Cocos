@@ -1,0 +1,161 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Room",
+    "type": "object",
+    "required": [
+        "id",
+        "name",
+        "size",
+        "tilemap"
+    ],
+    "properties": {
+        "id": {
+            "type": "string"
+        },
+        "name": {
+            "type": "string"
+        },
+        "size": {
+            "type": "object",
+            "properties": {
+                "width": {
+                    "type": "integer"
+                },
+                "height": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "width",
+                "height"
+            ]
+        },
+        "tilemap": {
+            "type": "string"
+        },
+        "connections": {
+            "type": "object",
+            "properties": {
+                "north": {
+                    "$ref": "#/definitions/connection"
+                },
+                "south": {
+                    "$ref": "#/definitions/connection"
+                },
+                "east": {
+                    "$ref": "#/definitions/connection"
+                },
+                "west": {
+                    "$ref": "#/definitions/connection"
+                }
+            }
+        },
+        "spawns": {
+            "type": "object",
+            "properties": {
+                "enemies": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/enemySpawn"
+                    }
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/itemSpawn"
+                    }
+                }
+            }
+        },
+        "triggers": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/triggerPlacement"
+            }
+        },
+        "unlockCondition": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "enum": [
+                        "enemy_cleared",
+                        "switch_all",
+                        "item_used"
+                    ]
+                },
+                "params": {
+                    "type": "object"
+                }
+            }
+        }
+    },
+    "definitions": {
+        "connection": {
+            "type": "object",
+            "properties": {
+                "roomId": {
+                    "type": "string"
+                },
+                "doorType": {
+                    "enum": [
+                        "normal",
+                        "locked",
+                        "boss",
+                        "combat"
+                    ]
+                }
+            }
+        },
+        "enemySpawn": {
+            "type": "object",
+            "properties": {
+                "enemyId": {
+                    "type": "string"
+                },
+                "x": {
+                    "type": "number"
+                },
+                "y": {
+                    "type": "number"
+                },
+                "group": {
+                    "type": "string"
+                }
+            }
+        },
+        "itemSpawn": {
+            "type": "object",
+            "properties": {
+                "itemId": {
+                    "type": "string"
+                },
+                "x": {
+                    "type": "number"
+                },
+                "y": {
+                    "type": "number"
+                }
+            }
+        },
+        "triggerPlacement": {
+            "type": "object",
+            "properties": {
+                "triggerId": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "x": {
+                    "type": "number"
+                },
+                "y": {
+                    "type": "number"
+                },
+                "params": {
+                    "type": "object"
+                }
+            }
+        }
+    }
+}

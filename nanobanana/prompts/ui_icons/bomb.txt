@@ -1,0 +1,38 @@
+16-bit pixel art bomb icon for RPG game UI
+
+A classic round bomb for inventory/HUD in a Zelda-like action RPG.
+
+Style:
+- 16-bit SNES era pixel art
+- Cartoon bomb design (not realistic)
+- Limited color palette (5-6 colors)
+- Playful but game-appropriate look
+
+Design:
+- Round spherical body
+- Dark blue/black primary color
+- Lit fuse at top with spark/flame
+- Short cylindrical fuse connector
+- Slight shine/highlight for 3D feel
+
+Fuse Detail:
+- Orange/yellow flame tip
+- Brown/grey fuse cord
+- 2-3 spark pixels for lit effect
+
+Size:
+- 16x16 pixels
+- Compact, fits in item slot
+
+Background:
+- Transparent
+
+Visual Details:
+- Smooth round body
+- Metal band around fuse hole
+- Highlight on upper left
+- Dark outline everywhere
+
+Output:
+- Single bomb icon
+- Optional: 2 states (unlit/lit)

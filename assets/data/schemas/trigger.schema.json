@@ -1,0 +1,48 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Trigger",
+    "type": "object",
+    "required": [
+        "id",
+        "type"
+    ],
+    "properties": {
+        "id": {
+            "type": "string"
+        },
+        "type": {
+            "enum": [
+                "pressure_plate",
+                "switch",
+                "torch",
+                "bombable_wall",
+                "chest"
+            ]
+        },
+        "linkedTo": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "requiredItem": {
+            "type": "string"
+        },
+        "reward": {
+            "type": "object",
+            "properties": {
+                "itemId": {
+                    "type": "string"
+                },
+                "count": {
+                    "type": "integer",
+                    "minimum": 1
+                }
+            }
+        },
+        "oneTime": {
+            "type": "boolean",
+            "default": false
+        }
+    }
+}

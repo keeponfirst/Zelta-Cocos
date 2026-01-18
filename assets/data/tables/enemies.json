@@ -1,0 +1,112 @@
+{
+    "enemies": [
+        {
+            "id": "slime",
+            "name": "史萊姆",
+            "hp": 2,
+            "attack": 1,
+            "speed": 50,
+            "behavior": "patrol",
+            "detectRange": 100,
+            "drops": [
+                {
+                    "itemId": "heart",
+                    "chance": 0.3
+                }
+            ],
+            "sprite": "sprites/enemies/slime",
+            "hitbox": {
+                "width": 24,
+                "height": 24
+            }
+        },
+        {
+            "id": "skeleton",
+            "name": "骷髏兵",
+            "hp": 4,
+            "attack": 2,
+            "speed": 80,
+            "behavior": "chase",
+            "detectRange": 150,
+            "drops": [
+                {
+                    "itemId": "heart",
+                    "chance": 0.4
+                },
+                {
+                    "itemId": "key",
+                    "chance": 0.1
+                }
+            ],
+            "sprite": "sprites/enemies/skeleton",
+            "hitbox": {
+                "width": 28,
+                "height": 32
+            }
+        },
+        {
+            "id": "bat",
+            "name": "蝙蝠",
+            "hp": 1,
+            "attack": 1,
+            "speed": 120,
+            "behavior": "fly",
+            "detectRange": 200,
+            "drops": [
+                {
+                    "itemId": "heart",
+                    "chance": 0.2
+                }
+            ],
+            "sprite": "sprites/enemies/bat",
+            "hitbox": {
+                "width": 20,
+                "height": 16
+            }
+        },
+        {
+            "id": "stalfos",
+            "name": "骷髏騎士",
+            "hp": 6,
+            "attack": 3,
+            "speed": 60,
+            "behavior": "chase",
+            "detectRange": 180,
+            "drops": [
+                {
+                    "itemId": "heart",
+                    "chance": 0.5
+                },
+                {
+                    "itemId": "bomb",
+                    "chance": 0.2
+                }
+            ],
+            "sprite": "sprites/enemies/stalfos",
+            "hitbox": {
+                "width": 32,
+                "height": 40
+            }
+        },
+        {
+            "id": "boss_golem",
+            "name": "石巨人",
+            "hp": 20,
+            "attack": 4,
+            "speed": 40,
+            "behavior": "chase",
+            "detectRange": 300,
+            "drops": [
+                {
+                    "itemId": "heart_container",
+                    "chance": 1.0
+                }
+            ],
+            "sprite": "sprites/enemies/boss_golem",
+            "hitbox": {
+                "width": 64,
+                "height": 64
+            }
+        }
+    ]
+}

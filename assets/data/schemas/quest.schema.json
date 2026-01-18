@@ -1,0 +1,66 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Quest",
+    "type": "object",
+    "required": [
+        "id",
+        "name",
+        "objectives"
+    ],
+    "properties": {
+        "id": {
+            "type": "string"
+        },
+        "name": {
+            "type": "string"
+        },
+        "description": {
+            "type": "string"
+        },
+        "objectives": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "enum": [
+                            "kill",
+                            "collect",
+                            "reach"
+                        ]
+                    },
+                    "target": {
+                        "type": "string"
+                    },
+                    "count": {
+                        "type": "integer",
+                        "minimum": 1
+                    }
+                },
+                "required": [
+                    "type",
+                    "target",
+                    "count"
+                ]
+            }
+        },
+        "rewards": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "itemId": {
+                        "type": "string"
+                    },
+                    "count": {
+                        "type": "integer",
+                        "minimum": 1
+                    }
+                }
+            }
+        },
+        "prerequisite": {
+            "type": "string"
+        }
+    }
+}

@@ -1,0 +1,47 @@
+16-bit pixel art menu/pause icon for RPG game UI
+
+Menu button icons for a Zelda-like action RPG game interface.
+
+Style:
+- 16-bit SNES era pixel art
+- Clean, minimal UI design
+- Limited color palette (3-4 colors per icon)
+- Instantly recognizable symbols
+
+Icons Needed:
+
+1. Pause/Menu Button
+- Three horizontal bars (hamburger menu)
+- Or: gear/cog symbol
+- White/cream color on dark
+
+2. Inventory Bag
+- Simple pouch/bag silhouette
+- Brown leather color
+- Tied top with string
+
+3. Map Icon
+- Rolled scroll or flat map
+- Parchment/tan color
+- Simple fold lines
+
+4. Settings Gear
+- Classic cog wheel
+- Grey metallic color
+- 6-8 teeth
+
+Size:
+- 16x16 pixels each
+- Clean at small sizes
+
+Background:
+- Transparent
+
+Considerations:
+- Touch-friendly tap targets
+- High contrast for visibility
+- Consistent style across set
+
+Output:
+- 4 icons in a row
+- Clear separation between each

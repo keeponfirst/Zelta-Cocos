@@ -1,0 +1,92 @@
+{
+    "quests": [
+        {
+            "id": "quest_tutorial",
+            "name": "勇者的覺醒",
+            "description": "擊敗村莊附近的史萊姆，證明你的實力。",
+            "objectives": [
+                {
+                    "type": "kill",
+                    "target": "slime",
+                    "count": 3
+                }
+            ],
+            "rewards": [
+                {
+                    "itemId": "bomb",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "id": "quest_forest_temple",
+            "name": "森林神殿的秘密",
+            "description": "探索森林神殿，擊敗潛伏其中的石巨人。",
+            "objectives": [
+                {
+                    "type": "reach",
+                    "target": "dungeon_01_boss",
+                    "count": 1
+                },
+                {
+                    "type": "kill",
+                    "target": "boss_golem",
+                    "count": 1
+                }
+            ],
+            "rewards": [
+                {
+                    "itemId": "heart_container",
+                    "count": 1
+                }
+            ],
+            "prerequisite": "quest_tutorial"
+        },
+        {
+            "id": "quest_collector",
+            "name": "收集者",
+            "description": "收集地城中所有的鑰匙。",
+            "objectives": [
+                {
+                    "type": "collect",
+                    "target": "key",
+                    "count": 5
+                }
+            ],
+            "rewards": [
+                {
+                    "itemId": "bomb",
+                    "count": 5
+                }
+            ]
+        },
+        {
+            "id": "quest_exterminator",
+            "name": "掃蕩者",
+            "description": "消滅地城中的所有敵人。",
+            "objectives": [
+                {
+                    "type": "kill",
+                    "target": "slime",
+                    "count": 10
+                },
+                {
+                    "type": "kill",
+                    "target": "skeleton",
+                    "count": 5
+                },
+                {
+                    "type": "kill",
+                    "target": "bat",
+                    "count": 8
+                }
+            ],
+            "rewards": [
+                {
+                    "itemId": "heart",
+                    "count": 3
+                }
+            ]
+        }
+    ]
+}

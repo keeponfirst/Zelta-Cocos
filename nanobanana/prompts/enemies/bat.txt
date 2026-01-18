@@ -1,0 +1,43 @@
+16-bit pixel art bat enemy sprite sheet
+
+A flying bat creature for a Zelda-like top-down 2D action RPG dungeon.
+
+Style:
+- 16-bit SNES era pixel art
+- Classic dungeon crawler bat design
+- Limited color palette (6-8 colors)
+- Simple but readable at small size
+
+Character Design:
+- Small flying bat, viewed from above/45 degree angle
+- Dark purple/black body
+- Large pointed ears
+- Small red or yellow eyes
+- Outstretched wings in flight
+- Simple fangs (optional, tiny)
+
+Animation Frames:
+- Fly: 2 frames, wings up and wings down
+- Idle/Hover: same as fly, looping
+- Hurt: 1 frame, tumbling motion
+
+Size:
+- 20x16 pixel sprite (wide for wings)
+- Fits within 24x24 cell
+
+Background:
+- Transparent
+
+Flight Motion:
+- Top-down view showing wingspan
+- Wings create shadow silhouette feel
+- Smooth flapping cycle
+
+Visual Details:
+- Membrane detail on wings (1-2 pixels)
+- Ear points prominent
+- Small body relative to wing span
+
+Output:
+- Simple 4-frame sprite sheet
+- Fly cycle + hurt frame

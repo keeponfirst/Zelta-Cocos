@@ -1,0 +1,67 @@
+16-bit pixel art overworld tileset moodboard
+
+A visual reference board for creating an outdoor fantasy world tileset for a Zelda-like top-down 2D action RPG.
+
+Mood/Theme:
+- Hyrule Field / peaceful countryside aesthetic
+- Bright, colorful, inviting atmosphere
+- Classic SNES-era visual style
+- Timeless fantasy world feeling
+
+Color Palette:
+- Grass greens (3-4 shades from light to dark)
+- Earth browns for paths and dirt
+- Water blues (river, lake, pond)
+- Foliage greens (darker for trees/bushes)
+- Stone grays for cliffs and rocks
+- Flower accents (red, yellow, purple)
+
+Required Tiles (16x16 each):
+
+Terrain:
+- Grass (base, variations, flowers)
+- Dirt path (straight, corners, junctions)
+- Water (still, animated ripples)
+- Sand/beach transition
+- Rock/cliff faces
+
+Vegetation:
+- Trees (various types, multiple sizes)
+- Bushes (cuttable and solid)
+- Flowers and tall grass
+- Tree stumps
+
+Structures:
+- Fence pieces (wood, stone)
+- Bridge over water
+- Well or fountain
+- Sign posts
+- House exterior pieces
+
+Objects:
+- Rocks (small, large, breakable)
+- Treasure chest world sprite
+- Save point marker
+- Dungeon entrance cave
+
+Tile Features:
+- Seamless tiling for terrain
+- Autotile-ready edges
+- Clear readable silhouettes
+- Consistent lighting (top-left source)
+
+Style Notes:
+- Vibrant but not oversaturated
+- 16x16 base tile size
+- Can combine for larger objects
+- Some tiles need animation frames
+
+Reference Games:
+- A Link to the Past overworld
+- Link's Awakening (Switch remake colors)
+- Cadence of Hyrule outdoor areas
+
+Output:
+- Moodboard collage showing palette
+- Example tile arrangements
+- Key tile samples at actual size

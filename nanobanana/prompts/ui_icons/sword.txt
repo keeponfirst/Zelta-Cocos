@@ -1,0 +1,39 @@
+16-bit pixel art sword icon for RPG game UI
+
+A simple hero's sword for inventory/HUD display in a Zelda-like game.
+
+Style:
+- 16-bit SNES era pixel art
+- Classic fantasy short sword
+- Limited color palette (5-6 colors)
+- Heroic and simple design
+
+Design:
+- Straight double-edged blade
+- Silver/steel blade color
+- Brown leather-wrapped handle
+- Simple gold/brass crossguard
+- Small round pommel
+
+Proportions:
+- Blade is 60% of total length
+- Wide crossguard
+- Comfortable grip handle
+
+Size:
+- 16x16 pixels (icon)
+- 32x32 pixels (inventory detail)
+- Diagonal or vertical orientation
+
+Background:
+- Transparent
+
+Visual Details:
+- Shiny highlight along blade center
+- Dark edge outline
+- Leather wrap texture on grip
+- Metal sheen on crossguard
+
+Output:
+- Single sword icon
+- Pointed upward or 45 degree angle

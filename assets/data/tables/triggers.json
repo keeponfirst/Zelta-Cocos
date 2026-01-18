@@ -1,0 +1,66 @@
+{
+    "triggers": [
+        {
+            "id": "pressure_plate_template",
+            "type": "pressure_plate",
+            "linkedTo": [],
+            "oneTime": false
+        },
+        {
+            "id": "switch_template",
+            "type": "switch",
+            "linkedTo": [],
+            "oneTime": false
+        },
+        {
+            "id": "torch_template",
+            "type": "torch",
+            "linkedTo": [],
+            "requiredItem": "lantern",
+            "oneTime": true
+        },
+        {
+            "id": "bombable_wall_template",
+            "type": "bombable_wall",
+            "linkedTo": [],
+            "requiredItem": "bomb",
+            "oneTime": true
+        },
+        {
+            "id": "chest_common_template",
+            "type": "chest",
+            "reward": {
+                "itemId": "heart",
+                "count": 1
+            },
+            "oneTime": true
+        },
+        {
+            "id": "chest_key_template",
+            "type": "chest",
+            "reward": {
+                "itemId": "key",
+                "count": 1
+            },
+            "oneTime": true
+        },
+        {
+            "id": "chest_boss_key_template",
+            "type": "chest",
+            "reward": {
+                "itemId": "boss_key",
+                "count": 1
+            },
+            "oneTime": true
+        },
+        {
+            "id": "chest_equipment_template",
+            "type": "chest",
+            "reward": {
+                "itemId": "boomerang",
+                "count": 1
+            },
+            "oneTime": true
+        }
+    ]
+}

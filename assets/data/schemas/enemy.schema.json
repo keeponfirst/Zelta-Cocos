@@ -1,0 +1,75 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Enemy",
+    "type": "object",
+    "required": [
+        "id",
+        "name",
+        "hp",
+        "attack",
+        "speed",
+        "behavior"
+    ],
+    "properties": {
+        "id": {
+            "type": "string"
+        },
+        "name": {
+            "type": "string"
+        },
+        "hp": {
+            "type": "integer",
+            "minimum": 1
+        },
+        "attack": {
+            "type": "integer",
+            "minimum": 0
+        },
+        "speed": {
+            "type": "number",
+            "minimum": 0
+        },
+        "behavior": {
+            "enum": [
+                "idle",
+                "patrol",
+                "chase",
+                "fly"
+            ]
+        },
+        "detectRange": {
+            "type": "number",
+            "default": 150
+        },
+        "drops": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "itemId": {
+                        "type": "string"
+                    },
+                    "chance": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                    }
+                }
+            }
+        },
+        "sprite": {
+            "type": "string"
+        },
+        "hitbox": {
+            "type": "object",
+            "properties": {
+                "width": {
+                    "type": "number"
+                },
+                "height": {
+                    "type": "number"
+                }
+            }
+        }
+    }
+}

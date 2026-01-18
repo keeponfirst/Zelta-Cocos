@@ -1,0 +1,37 @@
+16-bit pixel art key icon for RPG game UI
+
+A small dungeon key for inventory/HUD display in a Zelda-like game.
+
+Style:
+- 16-bit SNES era pixel art
+- Classic fantasy key design
+- Limited color palette (4-5 colors)
+- Simple but recognizable silhouette
+
+Design:
+- Traditional skeleton key shape
+- Gold/brass primary color
+- Circular bow (handle) at top
+- Simple blade with 2-3 teeth
+- Slight metallic sheen highlight
+
+Variations:
+1. Small Key - standard gold key
+2. Boss Key - larger, ornate, with red gem or skull motif
+
+Size:
+- 16x16 pixels (small key)
+- 24x24 pixels (boss key variant)
+
+Background:
+- Transparent
+
+Visual Details:
+- Dark outline for definition
+- Yellow-gold gradient shading
+- Highlight on bow edge
+- Simple teeth pattern
+
+Output:
+- Two keys: small key and boss key
+- Side by side on transparent background

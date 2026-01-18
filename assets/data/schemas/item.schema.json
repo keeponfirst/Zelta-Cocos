@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Item",
+  "type": "object",
+  "required": ["id", "name", "type"],
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "description": { "type": "string" },
+    "type": { "enum": ["consumable", "equipment", "key"] },
+    "stackable": { "type": "boolean", "default": true },
+    "maxStack": { "type": "integer", "minimum": 1, "maximum": 99, "default": 99 },
+    "effect": {
+      "type": "object",
+      "properties": {
+        "type": { "enum": ["heal", "damage", "buff", "unlock", "explode", "stun"] },
+        "value": { "type": "number" },
+        "duration": { "type": "number" }
+      }
+    },
+    "sprite": { "type": "string" },
+    "rarity": { "enum": ["common", "uncommon", "rare"], "default": "common" }
+  }
+}

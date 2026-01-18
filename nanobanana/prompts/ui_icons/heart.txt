@@ -1,0 +1,37 @@
+16-bit pixel art heart icon for RPG game UI
+
+A classic red heart health icon for a Zelda-like action RPG HUD.
+
+Style:
+- 16-bit SNES era pixel art
+- Iconic Zelda-style heart container look
+- Limited color palette (4-5 colors)
+- Clean, readable at small sizes
+
+Design:
+- Classic heart shape, slightly stylized
+- Bright red primary color
+- Pink/white highlight on upper left
+- Dark red outline/shadow
+- Symmetrical design
+
+States (3 versions):
+1. Full heart - solid red, full color
+2. Half heart - left half filled, right half empty/grey
+3. Empty heart - grey outline only, hollow
+
+Size:
+- 16x16 pixels each
+- Can scale to 24x24 for HUD display
+
+Background:
+- Transparent
+
+Visual Details:
+- 1 pixel dark outline
+- Internal highlight for depth
+- Slight 3D appearance via shading
+
+Output:
+- 3 icons in a row: full, half, empty
+- Clear separation between each
