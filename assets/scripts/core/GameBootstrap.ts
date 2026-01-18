@@ -1,14 +1,14 @@
 
 import { _decorator, Component, Node, Sprite, director, resources, Prefab, instantiate } from 'cc';
-import { InputSystem } from '../../systems/InputSystem';
-import { AudioSystem } from '../../systems/AudioSystem';
-import { SaveSystem } from '../../systems/SaveSystem';
-import { Player } from '../../gameplay/entity/Player';
-import { MovementComponent } from '../../gameplay/components/MovementComponent';
-import { CombatComponent } from '../../gameplay/components/CombatComponent';
-import { RoomManager } from '../../gameplay/world/RoomManager';
-import { CameraFollow } from '../../gameplay/CameraFollow';
-import { HUD } from '../../ui/HUD';
+import { InputSystem } from '../systems/InputSystem';
+import { AudioSystem } from '../systems/AudioSystem';
+import { SaveSystem } from '../systems/SaveSystem';
+import { Player } from '../gameplay/entity/Player';
+import { MovementComponent } from '../gameplay/components/MovementComponent';
+import { CombatComponent } from '../gameplay/components/CombatComponent';
+import { RoomManager } from '../gameplay/world/RoomManager';
+import { CameraFollow } from '../gameplay/CameraFollow';
+import { HUD } from '../ui/HUD';
 
 const { ccclass, property } = _decorator;
 
