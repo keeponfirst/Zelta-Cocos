@@ -4,7 +4,7 @@
  * 管理單一房間的狀態、敵人、觸發器
  */
 
-import { _decorator, Component, Node, Prefab, instantiate, Vec3 } from 'cc';
+import { _decorator, Component, Node, Prefab, instantiate, Vec3, resources } from 'cc';
 import { EventBus, GameEvents } from '../../core/EventBus';
 import { RoomData } from '../../core/DataManager';
 import { Enemy } from '../entity/Enemy';
@@ -46,13 +46,13 @@ export class Room extends Component {
     /**
      * 初始化房間
      */
-    public init(data: RoomData): void {
+    public async init(data: RoomData): Promise<void> {
         this._data = data;
         this._state = RoomState.LOADING;
 
         this.setupTriggers();
         this.setupDoors();
-        this.spawnEnemies();
+        await this.spawnEnemies();
 
         this._state = this._enemies.size > 0 ? RoomState.COMBAT : RoomState.ACTIVE;
 
@@ -80,23 +80,45 @@ export class Room extends Component {
         }
     }
 
-    private spawnEnemies(): void {
-        if (!this._data?.spawns?.enemies) return;
+    private async spawnEnemies(): Promise<void> {
+        if (!this._data?.spawns?.enemies || !this.enemyContainer) return;
 
         for (const spawn of this._data.spawns.enemies) {
-            // TODO: 實例化敵人
-            console.log(`Spawn enemy: ${spawn.enemyId} at (${spawn.x}, ${spawn.y})`);
+            const prefab = await this.loadEnemyPrefab(spawn.enemyId);
+            if (!prefab) continue;
 
-            // 記錄群組
-            const group = spawn.group || 'default';
-            if (!this._enemyGroups.has(group)) {
-                this._enemyGroups.set(group, []);
+            const enemyNode = instantiate(prefab);
+            enemyNode.position = new Vec3(spawn.x, spawn.y, 0);
+            this.enemyContainer.addChild(enemyNode);
+
+            const enemy = enemyNode.getComponent(Enemy);
+            if (enemy) {
+                this._enemies.set(enemy.entityId, enemy);
+
+                // 記錄群組
+                const group = spawn.group || 'default';
+                if (!this._enemyGroups.has(group)) {
+                    this._enemyGroups.set(group, []);
+                }
+                this._enemyGroups.get(group)!.push(enemy.entityId);
             }
-            this._enemyGroups.get(group)!.push(spawn.enemyId);
         }
 
         // 監聽敵人死亡
         EventBus.getInstance().on(GameEvents.ENEMY_DEATH, this.onEnemyDeath.bind(this));
+    }
+
+    private loadEnemyPrefab(enemyId: string): Promise<Prefab | null> {
+        return new Promise((resolve) => {
+            resources.load(`prefabs/enemies/${enemyId}`, Prefab, (err, prefab) => {
+                if (err) {
+                    console.error(`Failed to load enemy prefab: ${enemyId}`, err);
+                    resolve(null);
+                } else {
+                    resolve(prefab);
+                }
+            });
+        });
     }
 
     private onEnemyDeath(data: { enemyId: string }): void {

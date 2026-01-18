@@ -61,7 +61,7 @@ export class AIComponent extends Component {
         // Check for player first
         const playerPos = this.getPlayerPosition();
         if (playerPos && this.entity) {
-            const distSqr = this.entity.node.position.clone().subtract(playerPos).lengthSqr();
+            const distSqr = Vec3.squaredDistance(this.entity.node.position, playerPos);
             if (distSqr < this.detectRange * this.detectRange) {
                 this.behavior = 'chase';
                 return;
@@ -83,7 +83,7 @@ export class AIComponent extends Component {
 
         // Check if we reached the target
         if (this.entity &&
-            this.entity.node.position.clone().subtract(this._target).lengthSqr() < 100) { // 10*10
+            Vec3.squaredDistance(this.entity.node.position, this._target) < 100) { // 10*10
             this._isWaiting = true;
             this._patrolTimer = this.patrolWaitTime;
             this._movement?.stop();
@@ -103,7 +103,7 @@ export class AIComponent extends Component {
             return;
         }
 
-        const distSqr = this.entity.node.position.clone().subtract(playerPos).lengthSqr();
+        const distSqr = Vec3.squaredDistance(this.entity.node.position, playerPos);
 
         if (distSqr > this.detectRange * this.detectRange) {
             this.behavior = 'patrol';
@@ -114,7 +114,9 @@ export class AIComponent extends Component {
         const attackRangeSqr = this._combat.attackRange * this._combat.attackRange;
         if (distSqr <= attackRangeSqr) {
             this._movement?.stop();
-            this._combat.attack();
+            if (this._player) {
+                this._combat.attack(this._player);
+            }
         } else {
             this._target = playerPos;
             this.moveToTarget();
@@ -122,7 +124,6 @@ export class AIComponent extends Component {
     }
 
     private updateFly(dt: number): void {
-        // TODO: 飛行敵人行為，類似 chase 但可穿越障礙
         this.updateChase(dt);
     }
 
