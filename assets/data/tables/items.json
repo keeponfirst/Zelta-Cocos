@@ -25,7 +25,8 @@
                 "duration": 2
             },
             "sprite": "sprites/items/boomerang",
-            "rarity": "uncommon"
+            "rarity": "uncommon",
+            "icon": 1
         },
         {
             "id": "bow",
@@ -52,7 +53,8 @@
                 "value": 1
             },
             "sprite": "sprites/items/key",
-            "rarity": "common"
+            "rarity": "common",
+            "icon": 2
         },
         {
             "id": "boss_key",
@@ -79,7 +81,8 @@
                 "value": 4
             },
             "sprite": "sprites/items/bomb",
-            "rarity": "common"
+            "rarity": "common",
+            "icon": 0
         },
         {
             "id": "heart",

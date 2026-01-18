@@ -25,6 +25,7 @@ export interface ItemData {
     };
     sprite?: string;
     rarity?: string;
+    icon?: number;
 }
 
 export interface EnemyData {

@@ -94,12 +94,8 @@ export class Player extends Entity {
      * 使用當前裝備道具
      */
     public useEquippedItem(): void {
-        // TODO: 取得當前裝備並使用
         if (this._inventory) {
-            const equipped = this._inventory.getEquippedItem();
-            if (equipped) {
-                this._inventory.useItem(equipped);
-            }
+            this._inventory.useCurrentItem();
         }
     }
 
