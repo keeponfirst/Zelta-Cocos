@@ -99,12 +99,12 @@ export class InputSystem extends Component {
         return this._state;
     }
 
-    public getMovementDirection(): Vec2 {
+    public getDirection(): Vec2 {
         return this._state.movement;
     }
 
-    public isAttackPressed(): boolean {
-        return this._state.attack;
+    public isButtonPressed(button: 'attack' | 'useItem' | 'menu'): boolean {
+        return this._state[button];
     }
 
     public isItemUsePressed(): boolean {
