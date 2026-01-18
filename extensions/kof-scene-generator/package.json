@@ -1,0 +1,20 @@
+{
+    "name": "kof-scene-generator",
+    "version": "1.0.0",
+    "description": "Generates base scenes for Zelta-Cocos",
+    "main": "./main.js",
+    "contributions": {
+        "menu": [
+            {
+                "path": "KOF/Generate Base Scenes",
+                "label": "Generate Base Scenes",
+                "message": "generate-base-scenes"
+            }
+        ],
+        "messages": {
+            "generate-base-scenes": {
+                "methods": ["generateBaseScenes"]
+            }
+        }
+    }
+}
