@@ -18,9 +18,9 @@ This repository serves as a live example and reference implementation for the **
 | **0** | **Scaffolding** | ✅ Done | Project structure, schemas, base classes |
 | **1** | **Core Framework** | ✅ Done | EventBus, Entity-Component system |
 | **2** | **Player System** | ✅ Done | **Input**: Keyboard/Virtual Joystick<br>**Movement**: 8-way + collision<br>**Combat**: Attack logic & HP system |
-| **3** | **Enemy System** | 🚧 In Progress | Slime, Skeleton, Bat AI & behaviors |
-| **4** | **World System** | ⏳ Pending | Room management, doors, triggers |
-| **5** | **Item System** | ⏳ Pending | Inventory, bombs, boomerang |
+| **3** | **Enemy System** | ✅ Done | Slime, Skeleton, Bat AI & behaviors |
+| **4** | **World System** | ✅ Done | Room management, doors, triggers |
+| **5** | **Item System** | 🚧 In Progress | Inventory, bombs, boomerang (Assets Ready, Code in Dev) |
 | **6** | **Save System** | ⏳ Pending | Save/Load & migration |
 | **7** | **Polish** | ⏳ Pending | HUD, Audio, QA |
 
