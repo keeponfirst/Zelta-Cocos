@@ -7,6 +7,7 @@
 import { _decorator, Vec3 } from 'cc';
 import { Entity } from '../../core/Entity';
 import { InputSystem } from '../../systems/InputSystem';
+import { PlayerSaveData } from '../../systems/SaveSystem';
 import { HealthComponent } from '../components/HealthComponent';
 import { MovementComponent } from '../components/MovementComponent';
 import { CombatComponent } from '../components/CombatComponent';
@@ -127,5 +128,28 @@ export class Player extends Entity {
 
     public get isInvincible(): boolean {
         return this._health?.isInvincible || false;
+    }
+
+    /**
+     * Converts player data to a saveable format.
+     */
+    public toSaveData(): any {
+        return {
+            hp: this.hp,
+            maxHp: this.maxHp,
+            position: { x: this.node.position.x, y: this.node.position.y },
+        };
+    }
+
+    /**
+     * Loads player data from a save file.
+     * @param data The data to load.
+     */
+    public loadData(data: PlayerSaveData): void {
+        if (this._health) {
+            this._health.hp = data.hp;
+            this._health.maxHp = data.maxHp;
+        }
+        this.node.setPosition(new Vec3(data.position.x, data.position.y, 0));
     }
 }

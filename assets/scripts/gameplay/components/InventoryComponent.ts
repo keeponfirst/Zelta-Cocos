@@ -1,6 +1,7 @@
 import { _decorator, Component } from 'cc';
 import { DataManager } from '../../core/DataManager';
 import { ItemSystem } from '../../systems/ItemSystem';
+import { InventorySaveData } from '../../systems/SaveSystem';
 
 const { ccclass, property } = _decorator;
 
@@ -75,5 +76,24 @@ import { ItemSystem } from '../../systems/ItemSystem';
                 }
             }
         }
+    }
+
+    /**
+     * Converts inventory data to a saveable format.
+     */
+    public toSaveData(): any {
+        return {
+            items: this._items,
+            equippedIndex: this.equippedItemIndex,
+        };
+    }
+
+    /**
+     * Loads inventory data from a save file.
+     * @param data The data to load.
+     */
+    public loadData(data: InventorySaveData): void {
+        this._items = data.items;
+        this.equippedItemIndex = data.equippedIndex;
     }
 }

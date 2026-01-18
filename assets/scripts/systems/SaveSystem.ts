@@ -4,35 +4,37 @@
  * 管理遊戲存檔的讀寫和版本遷移
  */
 
-import { _decorator, Component, sys } from 'cc';
+import { _decorator, Component, sys, find } from 'cc';
 import { EventBus, GameEvents } from '../core/EventBus';
 import { SaveMigrator } from './SaveMigrator';
+import { Player } from '../gameplay/entity/Player';
+import { InventoryComponent } from '../gameplay/components/InventoryComponent';
+import { RoomManager } from '../gameplay/world/RoomManager';
 
 const { ccclass, property } = _decorator;
+
+export interface PlayerSaveData {
+    hp: number;
+    maxHp: number;
+    position: { x: number; y: number };
+}
+
+export interface InventorySaveData {
+    items: { itemId: string; count: number }[];
+    equippedIndex: number;
+}
+
+export interface WorldSaveData {
+    currentRoomId: string;
+    clearedRooms: string[];
+}
 
 export interface SaveData {
     version: string;
     timestamp: number;
-    player: {
-        hp: number;
-        maxHp: number;
-        position: { x: number; y: number };
-        currentRoom: string;
-    };
-    inventory: {
-        items: Record<string, number>;
-        equipment: string[];
-    };
-    world: {
-        chestsOpened: string[];
-        doorsUnlocked: string[];
-        triggersActivated: string[];
-    };
-    dungeon: {
-        currentDungeon: string | null;
-        roomsCleared: string[];
-        bossDefeated: boolean;
-    };
+    player: PlayerSaveData;
+    inventory: InventorySaveData;
+    world: WorldSaveData;
 }
 
 const CURRENT_VERSION = '1.0.0';
@@ -128,30 +130,16 @@ export class SaveSystem extends Component {
      * 收集當前遊戲狀態
      */
     private collectGameState(): SaveData {
-        // TODO: 從各系統收集狀態
+        const player = find('Player')?.getComponent(Player);
+        const inventory = player?.getComponent(InventoryComponent);
+        const roomManager = RoomManager.getInstance();
+
         return {
             version: CURRENT_VERSION,
             timestamp: Date.now(),
-            player: {
-                hp: 6,
-                maxHp: 6,
-                position: { x: 0, y: 0 },
-                currentRoom: 'overworld_start',
-            },
-            inventory: {
-                items: {},
-                equipment: ['sword_wood'],
-            },
-            world: {
-                chestsOpened: [],
-                doorsUnlocked: [],
-                triggersActivated: [],
-            },
-            dungeon: {
-                currentDungeon: null,
-                roomsCleared: [],
-                bossDefeated: false,
-            },
+            player: player?.toSaveData(),
+            inventory: inventory?.toSaveData(),
+            world: roomManager?.toSaveData(),
         };
     }
 
@@ -159,8 +147,13 @@ export class SaveSystem extends Component {
      * 套用遊戲狀態
      */
     private applyGameState(data: SaveData): void {
-        // TODO: 將狀態套用到各系統
-        console.log('Applying game state:', data);
+        const player = find('Player')?.getComponent(Player);
+        const inventory = player?.getComponent(InventoryComponent);
+        const roomManager = RoomManager.getInstance();
+
+        player?.loadData(data.player);
+        inventory?.loadData(data.inventory);
+        roomManager?.loadData(data.world);
     }
 
     /**

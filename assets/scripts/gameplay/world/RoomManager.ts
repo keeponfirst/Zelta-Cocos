@@ -8,6 +8,7 @@ import { _decorator, Component, Node, Prefab, instantiate, Vec3 } from 'cc';
 import { EventBus, GameEvents } from '../../core/EventBus';
 import { DataManager, RoomData } from '../../core/DataManager';
 import { Room, RoomState } from './Room';
+import { WorldSaveData } from '../../systems/SaveSystem';
 
 const { ccclass, property } = _decorator;
 
@@ -145,16 +146,20 @@ export class RoomManager extends Component {
     }
 
     /**
-     * 從存檔還原
+     * 轉換為存檔格式
      */
-    public loadFromSave(roomsCleared: string[]): void {
-        this._roomsCleared = new Set(roomsCleared);
+    public toSaveData(): any {
+        return {
+            currentRoomId: this._currentRoomId,
+            clearedRooms: Array.from(this._roomsCleared),
+        };
     }
 
     /**
-     * 轉換為存檔格式
+     * 從存檔還原
      */
-    public toSaveFormat(): string[] {
-        return Array.from(this._roomsCleared);
+    public loadData(data: WorldSaveData): void {
+        this._currentRoomId = data.currentRoomId;
+        this._roomsCleared = new Set(data.clearedRooms);
     }
 }
