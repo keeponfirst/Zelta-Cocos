@@ -18,6 +18,13 @@ export class HealthComponent extends Component {
         return this._isInvincible;
     }
 
+    public set isInvincible(value: boolean) {
+        this._isInvincible = value;
+        if (!value) {
+            this._invincibleTimer = 0;
+        }
+    }
+
     public get isDead(): boolean {
         return this.hp <= 0;
     }

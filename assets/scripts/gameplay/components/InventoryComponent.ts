@@ -1,5 +1,6 @@
 import { _decorator, Component } from 'cc';
 import { DataManager } from '../../core/DataManager';
+import { EventBus, GameEvents } from '../../core/EventBus';
 import { ItemSystem } from '../../systems/ItemSystem';
 import { InventorySaveData } from '../../systems/SaveSystem';
 
@@ -15,10 +16,17 @@ export class InventoryComponent extends Component {
     @property
     public equippedItemIndex: number = -1;
 
+    public rupees: number = 0;
+
     private _items: InventoryItem[] = [];
 
     public get items(): InventoryItem[] {
         return this._items;
+    }
+
+    public addRupees(amount: number): void {
+        this.rupees += amount;
+        EventBus.getInstance().emit(GameEvents.ITEM_PICKUP, { rupees: this.rupees });
     }
 
     public addItem(itemId: string, count: number = 1): boolean {
@@ -85,6 +93,7 @@ import { ItemSystem } from '../../systems/ItemSystem';
         return {
             items: this._items,
             equippedIndex: this.equippedItemIndex,
+            rupees: this.rupees,
         };
     }
 
@@ -95,5 +104,6 @@ import { ItemSystem } from '../../systems/ItemSystem';
     public loadData(data: InventorySaveData): void {
         this._items = data.items;
         this.equippedItemIndex = data.equippedIndex;
+        this.rupees = data.rupees || 0;
     }
 }

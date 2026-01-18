@@ -18,8 +18,8 @@ export class AudioSystem extends Component {
     @property(AudioSource)
     private sfxSource: AudioSource | null = null;
 
-    private _bgmVolume: number = 1.0;
-    private _sfxVolume: number = 1.0;
+    public volumeSFX: number = 1.0;
+    public volumeMusic: number = 1.0;
     private _muted: boolean = false;
 
     public static getInstance(): AudioSystem | null {
@@ -37,16 +37,16 @@ export class AudioSystem extends Component {
     /**
      * 播放 BGM
      */
-    public playBGM(clipName: string, loop: boolean = true): void {
-        // TODO: 實作 BGM 播放
-        resources.load(`audio/bgm/${clipName}`, AudioClip, (err, clip) => {
+    public playBGM(path: string): void {
+        resources.load(path, AudioClip, (err, clip) => {
             if (err) {
-                console.error('BGM load failed:', err);
+                console.error(`Failed to load BGM: ${path}`, err);
                 return;
             }
             if (this.bgmSource) {
                 this.bgmSource.clip = clip;
-                this.bgmSource.loop = loop;
+                this.bgmSource.loop = true;
+                this.bgmSource.volume = this.volumeMusic;
                 this.bgmSource.play();
             }
         });
@@ -64,15 +64,14 @@ export class AudioSystem extends Component {
     /**
      * 播放 SFX
      */
-    public playSFX(clipName: string): void {
-        // TODO: 實作 SFX 播放
-        resources.load(`audio/sfx/${clipName}`, AudioClip, (err, clip) => {
+    public playSFX(path: string): void {
+        resources.load(path, AudioClip, (err, clip) => {
             if (err) {
-                console.error('SFX load failed:', err);
+                console.error(`Failed to load SFX: ${path}`, err);
                 return;
             }
             if (this.sfxSource) {
-                this.sfxSource.playOneShot(clip, this._sfxVolume);
+                this.sfxSource.playOneShot(clip, this.volumeSFX);
             }
         });
     }
@@ -81,9 +80,9 @@ export class AudioSystem extends Component {
      * 設定 BGM 音量
      */
     public setBGMVolume(volume: number): void {
-        this._bgmVolume = Math.max(0, Math.min(1, volume));
+        this.volumeMusic = Math.max(0, Math.min(1, volume));
         if (this.bgmSource) {
-            this.bgmSource.volume = this._bgmVolume;
+            this.bgmSource.volume = this.volumeMusic;
         }
     }
 
@@ -91,7 +90,7 @@ export class AudioSystem extends Component {
      * 設定 SFX 音量
      */
     public setSFXVolume(volume: number): void {
-        this._sfxVolume = Math.max(0, Math.min(1, volume));
+        this.volumeSFX = Math.max(0, Math.min(1, volume));
     }
 
     /**
@@ -100,7 +99,7 @@ export class AudioSystem extends Component {
     public setMuted(muted: boolean): void {
         this._muted = muted;
         if (this.bgmSource) {
-            this.bgmSource.volume = muted ? 0 : this._bgmVolume;
+            this.bgmSource.volume = muted ? 0 : this.volumeMusic;
         }
     }
 
