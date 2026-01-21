@@ -44,22 +44,33 @@ const SAVE_KEY = 'zelta_save';
 @ccclass('SaveSystem')
 export class SaveSystem extends Component {
     private static _instance: SaveSystem | null = null;
+    private readonly handleSave = (slotId: number = 0): void => {
+        this.save(slotId);
+    };
+    private readonly handleLoad = (slotId: number = 0): void => {
+        this.load(slotId);
+    };
 
     public static getInstance(): SaveSystem | null {
         return SaveSystem._instance;
     }
 
     protected onLoad(): void {
+        if (SaveSystem._instance && SaveSystem._instance !== this) {
+            console.warn('SaveSystem instance already exists. Replacing with the newest instance.');
+        }
         SaveSystem._instance = this;
 
-        EventBus.getInstance().on(GameEvents.SAVE_GAME, this.save.bind(this));
-        EventBus.getInstance().on(GameEvents.LOAD_GAME, this.load.bind(this));
+        EventBus.getInstance().on(GameEvents.SAVE_GAME, this.handleSave);
+        EventBus.getInstance().on(GameEvents.LOAD_GAME, this.handleLoad);
     }
 
     protected onDestroy(): void {
         if (SaveSystem._instance === this) {
             SaveSystem._instance = null;
         }
+        EventBus.getInstance().off(GameEvents.SAVE_GAME, this.handleSave);
+        EventBus.getInstance().off(GameEvents.LOAD_GAME, this.handleLoad);
     }
 
     /**
@@ -112,6 +123,7 @@ export class SaveSystem extends Component {
                 }
             }
 
+            data = this.normalizeSaveData(data);
             if (!this.validateSaveData(data)) {
                 console.error('Save data validation failed after migration. Check schema compatibility.');
                 return null;
@@ -187,6 +199,30 @@ export class SaveSystem extends Component {
         if (hasWorldData) {
             roomManager?.loadData(data.world);
         }
+    }
+
+    private normalizeSaveData(data: SaveData): SaveData {
+        const normalized: SaveData = { ...data };
+        if (normalized.inventory) {
+            normalized.inventory = {
+                items: [],
+                equippedIndex: -1,
+                rupees: 0,
+                ...normalized.inventory,
+            };
+            if (!Array.isArray(normalized.inventory.items)) {
+                normalized.inventory.items = [];
+            }
+        }
+        if (normalized.world) {
+            normalized.world = {
+                ...normalized.world,
+                clearedRooms: Array.isArray(normalized.world.clearedRooms)
+                    ? normalized.world.clearedRooms
+                    : [],
+            };
+        }
+        return normalized;
     }
 
     private validateSaveData(data: SaveData): boolean {
