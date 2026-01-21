@@ -22,6 +22,7 @@ export interface PlayerSaveData {
 export interface InventorySaveData {
     items: { itemId: string; count: number }[];
     equippedIndex: number;
+    rupees?: number;
 }
 
 export interface WorldSaveData {
@@ -151,9 +152,15 @@ export class SaveSystem extends Component {
         const inventory = player?.getComponent(InventoryComponent);
         const roomManager = RoomManager.getInstance();
 
-        player?.loadData(data.player);
-        inventory?.loadData(data.inventory);
-        roomManager?.loadData(data.world);
+        if (data.player) {
+            player?.loadData(data.player);
+        }
+        if (data.inventory) {
+            inventory?.loadData(data.inventory);
+        }
+        if (data.world) {
+            roomManager?.loadData(data.world);
+        }
     }
 
     /**
