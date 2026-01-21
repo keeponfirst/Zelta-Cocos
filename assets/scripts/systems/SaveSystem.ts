@@ -71,6 +71,10 @@ export class SaveSystem extends Component {
             const data = this.collectGameState();
             data.version = CURRENT_VERSION;
             data.timestamp = Date.now();
+            if (!this.validateSaveData(data)) {
+                console.error('Save data validation failed. Update schema/migrations before saving.');
+                return false;
+            }
 
             const key = `${SAVE_KEY}_${slotId}`;
             sys.localStorage.setItem(key, JSON.stringify(data));
@@ -102,6 +106,15 @@ export class SaveSystem extends Component {
             // 版本遷移
             if (data.version !== CURRENT_VERSION) {
                 data = SaveMigrator.migrate(data, CURRENT_VERSION);
+                if (data.version !== CURRENT_VERSION) {
+                    console.error(`Save data version ${data.version} is not supported. Add migration before loading.`);
+                    return null;
+                }
+            }
+
+            if (!this.validateSaveData(data)) {
+                console.error('Save data validation failed after migration. Check schema compatibility.');
+                return null;
             }
 
             this.applyGameState(data);
@@ -174,6 +187,29 @@ export class SaveSystem extends Component {
         if (hasWorldData) {
             roomManager?.loadData(data.world);
         }
+    }
+
+    private validateSaveData(data: SaveData): boolean {
+        const hasPlayer = !!data.player
+            && typeof data.player.hp === 'number'
+            && typeof data.player.maxHp === 'number'
+            && !!data.player.position
+            && typeof data.player.position.x === 'number'
+            && typeof data.player.position.y === 'number';
+        const hasInventory = !!data.inventory
+            && Array.isArray(data.inventory.items)
+            && typeof data.inventory.equippedIndex === 'number'
+            && typeof data.inventory.rupees === 'number';
+        const hasWorld = !!data.world
+            && typeof data.world.currentRoomId === 'string'
+            && Array.isArray(data.world.clearedRooms);
+
+        return !!data
+            && typeof data.version === 'string'
+            && typeof data.timestamp === 'number'
+            && hasPlayer
+            && hasInventory
+            && hasWorld;
     }
 
     /**

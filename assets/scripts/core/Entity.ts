@@ -30,6 +30,12 @@ export class Entity extends CCComponent {
      */
     public addGameComponent<T extends Component>(ComponentClass: new () => T): T {
         // TODO: 實作元件新增
+        if (ComponentClass.prototype instanceof CCComponent) {
+            throw new Error(
+                `Use node.addComponent() for Cocos Components. ` +
+                `Entity.addGameComponent() is for game logic components only: ${ComponentClass.name}`
+            );
+        }
         const comp = new ComponentClass();
         comp.entity = this;
         this._components.set(ComponentClass.name, comp);
