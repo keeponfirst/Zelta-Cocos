@@ -56,5 +56,11 @@ The game uses an **Entity-Component** pattern with a global **EventBus**:
 3. **Important:** Run the editor tool via menu `KOF > Validate Scenes` to ensure scene structure is correct.
 4. Open `assets/scenes/boot.scene` to start. This is the configured Start Scene.
 
+## 🧪 Debug: Save/Load Regression Check
+
+- Add `SaveLoadRegressionCheck` to a scene node and enable **Run On Load** in the inspector.
+- Press Play to run the check and review the Console logs for assertions.
+- Remove or disable the component when finished.
+
 ---
 *Built with ❤️ using the KeepOnFirst Workflow*
