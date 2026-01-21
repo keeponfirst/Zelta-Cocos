@@ -57,7 +57,9 @@ export class SaveSystem extends Component {
 
     protected onLoad(): void {
         if (SaveSystem._instance && SaveSystem._instance !== this) {
-            console.warn('SaveSystem instance already exists. Replacing with the newest instance.');
+            console.warn('SaveSystem instance already exists. Keeping the first instance and disabling this duplicate.');
+            this.enabled = false;
+            return;
         }
         SaveSystem._instance = this;
 
@@ -203,25 +205,23 @@ export class SaveSystem extends Component {
 
     private normalizeSaveData(data: SaveData): SaveData {
         const normalized: SaveData = { ...data };
-        if (normalized.inventory) {
-            normalized.inventory = {
-                items: [],
-                equippedIndex: -1,
-                rupees: 0,
-                ...normalized.inventory,
-            };
-            if (!Array.isArray(normalized.inventory.items)) {
-                normalized.inventory.items = [];
-            }
+        normalized.inventory = {
+            items: [],
+            equippedIndex: -1,
+            rupees: 0,
+            ...(normalized.inventory ?? {}),
+        };
+        if (!Array.isArray(normalized.inventory.items)) {
+            normalized.inventory.items = [];
         }
-        if (normalized.world) {
-            normalized.world = {
-                ...normalized.world,
-                clearedRooms: Array.isArray(normalized.world.clearedRooms)
-                    ? normalized.world.clearedRooms
-                    : [],
-            };
-        }
+        normalized.world = {
+            currentRoomId: '',
+            clearedRooms: [],
+            ...(normalized.world ?? {}),
+        };
+        normalized.world.clearedRooms = Array.isArray(normalized.world.clearedRooms)
+            ? normalized.world.clearedRooms
+            : [];
         return normalized;
     }
 
