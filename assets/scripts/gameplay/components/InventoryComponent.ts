@@ -116,6 +116,7 @@ export class InventoryComponent extends Component {
 
         this._items = data.items || [];
         this.equippedItemIndex = data.equippedIndex ?? -1;
+        // Backward compatibility: older saves may not include rupees.
         this.rupees = data.rupees ?? 0;
     }
 }
