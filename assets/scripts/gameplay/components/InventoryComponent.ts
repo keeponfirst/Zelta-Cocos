@@ -73,7 +73,12 @@ export class InventoryComponent extends Component {
         if (this.equippedItemIndex !== -1) {
             const item = this._items[this.equippedItemIndex];
             if (item && item.count > 0) {
-                ItemSystem.getInstance().useItem(item.itemId, this.node);
+                const itemSystem = ItemSystem.getInstance();
+                if (!itemSystem) {
+                    console.warn('ItemSystem not found. Unable to use item.');
+                    return;
+                }
+                itemSystem.useItem(item.itemId, this.node);
                 const itemData = DataManager.getInstance().getItem(item.itemId);
                 if (itemData && itemData.type === 'consumable') {
                     item.count--;
@@ -102,8 +107,15 @@ export class InventoryComponent extends Component {
      * @param data The data to load.
      */
     public loadData(data: InventorySaveData): void {
-        this._items = data.items;
-        this.equippedItemIndex = data.equippedIndex;
-        this.rupees = data.rupees || 0;
+        if (!data) {
+            this._items = [];
+            this.equippedItemIndex = -1;
+            this.rupees = 0;
+            return;
+        }
+
+        this._items = data.items || [];
+        this.equippedItemIndex = data.equippedIndex ?? -1;
+        this.rupees = data.rupees ?? 0;
     }
 }

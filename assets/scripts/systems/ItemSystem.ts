@@ -7,11 +7,18 @@ const { ccclass, property } = _decorator;
 export class ItemSystem extends Component {
     private static _instance: ItemSystem | null = null;
 
-    public static getInstance(): ItemSystem {
-        if (!ItemSystem._instance) {
-            ItemSystem._instance = new ItemSystem();
-        }
+    public static getInstance(): ItemSystem | null {
         return ItemSystem._instance;
+    }
+
+    protected onLoad(): void {
+        ItemSystem._instance = this;
+    }
+
+    protected onDestroy(): void {
+        if (ItemSystem._instance === this) {
+            ItemSystem._instance = null;
+        }
     }
 
     public useItem(itemId: string, user: Node): void {
