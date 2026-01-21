@@ -13,8 +13,7 @@ export class ItemSystem extends Component {
 
     protected onLoad(): void {
         if (ItemSystem._instance && ItemSystem._instance !== this) {
-            console.warn('ItemSystem instance already exists. Using the first instance.');
-            return;
+            console.warn('ItemSystem instance already exists. Replacing with the newest instance.');
         }
         ItemSystem._instance = this;
     }

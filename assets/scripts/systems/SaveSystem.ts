@@ -57,7 +57,9 @@ export class SaveSystem extends Component {
     }
 
     protected onDestroy(): void {
-        SaveSystem._instance = null;
+        if (SaveSystem._instance === this) {
+            SaveSystem._instance = null;
+        }
     }
 
     /**
