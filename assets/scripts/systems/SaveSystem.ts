@@ -22,7 +22,7 @@ export interface PlayerSaveData {
 export interface InventorySaveData {
     items: { itemId: string; count: number }[];
     equippedIndex: number;
-    rupees?: number;
+    rupees: number;
 }
 
 export interface WorldSaveData {
@@ -152,13 +152,24 @@ export class SaveSystem extends Component {
         const inventory = player?.getComponent(InventoryComponent);
         const roomManager = RoomManager.getInstance();
 
-        if (data.player) {
+        const hasPlayerData = !!data.player
+            && typeof data.player.hp === 'number'
+            && typeof data.player.maxHp === 'number'
+            && !!data.player.position
+            && typeof data.player.position.x === 'number'
+            && typeof data.player.position.y === 'number';
+        if (hasPlayerData) {
             player?.loadData(data.player);
         }
+
         if (data.inventory) {
             inventory?.loadData(data.inventory);
         }
-        if (data.world) {
+
+        const hasWorldData = !!data.world
+            && typeof data.world.currentRoomId === 'string'
+            && Array.isArray(data.world.clearedRooms);
+        if (hasWorldData) {
             roomManager?.loadData(data.world);
         }
     }
