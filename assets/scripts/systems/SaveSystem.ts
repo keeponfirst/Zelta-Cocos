@@ -44,6 +44,7 @@ const SAVE_KEY = 'zelta_save';
 @ccclass('SaveSystem')
 export class SaveSystem extends Component {
     private static _instance: SaveSystem | null = null;
+    private static _handlersRegistered = false;
     private readonly handleSave = (slotId: number = 0): void => {
         this.save(slotId);
     };
@@ -62,17 +63,45 @@ export class SaveSystem extends Component {
             return;
         }
         SaveSystem._instance = this;
+        // Guardrails: never replace the first singleton instance; disable duplicates and never let them register EventBus handlers.
+        // Schema changes must add backward-compatible defaults first; normalizeSaveData must keep complete saves intact.
+        this.registerHandlers();
+    }
 
-        EventBus.getInstance().on(GameEvents.SAVE_GAME, this.handleSave);
-        EventBus.getInstance().on(GameEvents.LOAD_GAME, this.handleLoad);
+    protected onEnable(): void {
+        if (SaveSystem._instance === this) {
+            this.registerHandlers();
+        }
+    }
+
+    protected onDisable(): void {
+        if (SaveSystem._instance === this) {
+            this.unregisterHandlers();
+        }
     }
 
     protected onDestroy(): void {
         if (SaveSystem._instance === this) {
+            this.unregisterHandlers();
             SaveSystem._instance = null;
+        }
+    }
+    private registerHandlers(): void {
+        if (SaveSystem._handlersRegistered) {
+            return;
+        }
+        EventBus.getInstance().on(GameEvents.SAVE_GAME, this.handleSave);
+        EventBus.getInstance().on(GameEvents.LOAD_GAME, this.handleLoad);
+        SaveSystem._handlersRegistered = true;
+    }
+
+    private unregisterHandlers(): void {
+        if (!SaveSystem._handlersRegistered) {
+            return;
         }
         EventBus.getInstance().off(GameEvents.SAVE_GAME, this.handleSave);
         EventBus.getInstance().off(GameEvents.LOAD_GAME, this.handleLoad);
+        SaveSystem._handlersRegistered = false;
     }
 
     /**
@@ -204,6 +233,7 @@ export class SaveSystem extends Component {
     }
 
     private normalizeSaveData(data: SaveData): SaveData {
+        // Guardrails: provide defaults even when inventory/world are missing, preserve complete saves without dropping fields.
         const normalized: SaveData = { ...data };
         normalized.inventory = {
             items: [],
